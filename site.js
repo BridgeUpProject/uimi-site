@@ -588,15 +588,18 @@
           .addLabel("rest")
           .to({}, { duration: 3.2 });
 
-        // The live waveform on the recording screen (anime.js): every beat,
-        // each bar springs to a new level from wherever it is.
+        // The live waveform on the recording screen (anime.js): a calm,
+        // speaking-pace sway. Bars near the middle run taller, the edges stay
+        // low, and each beat eases every bar to a new level from where it is.
         let beat = null;
         const bars = $$(".s-rec .wave i");
         if (A && bars.length) {
+          const mid = (bars.length - 1) / 2;
+          const shape = bars.map((_, i) => 0.3 + 0.42 * Math.pow(1 - Math.abs(i - mid) / mid, 1.3));
           beat = A.createTimer({
-            duration: 150,
+            duration: 460,
             loop: true,
-            onLoop: () => A.animate(bars, { scaleY: () => A.utils.random(0.16, 1, 2), duration: 150, ease: "outQuad" }),
+            onLoop: () => A.animate(bars, { scaleY: (_, i) => +(shape[i] * A.utils.random(0.62, 1, 2)).toFixed(2), duration: 460, ease: "inOutSine", delay: A.stagger(10, { from: "center" }) }),
           });
           animes.push(beat);
           undo.push(() => { A.utils.remove(bars); bars.forEach((b) => b.removeAttribute("style")); });

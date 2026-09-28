@@ -201,12 +201,12 @@ section{padding:clamp(96px,14vw,168px) 0}
 .vis-chips span.on{background:var(--blue-deep);color:#fff;box-shadow:none}
 .rec{display:flex;align-items:center;gap:12px}
 .rec-btn{width:40px;height:40px;border-radius:14px;background:var(--blue-deep);display:grid;place-items:center;position:relative;flex:none}
-.rec-btn::before{content:"";position:absolute;inset:0;border-radius:14px;background:var(--blue);opacity:.35;animation:pulse 2.4s var(--ease) infinite}
-@keyframes pulse{from{transform:scale(1);opacity:.4}to{transform:scale(1.9);opacity:0}}
+.rec-btn::before{content:"";position:absolute;inset:0;border-radius:14px;background:var(--blue);opacity:.3;animation:pulse 3.4s var(--ease) infinite}
+@keyframes pulse{from{transform:scale(1);opacity:.3}to{transform:scale(1.45);opacity:0}}
 .bars{display:flex;gap:3px;align-items:center;height:20px;position:relative}
-.bars i{width:3px;height:18px;border-radius:9px;background:#fff;transform-origin:50% 50%;animation:bar 1s var(--ease-io) infinite alternate}
-.bars i:nth-child(2){animation-delay:.12s}.bars i:nth-child(3){animation-delay:.24s}.bars i:nth-child(4){animation-delay:.36s}.bars i:nth-child(5){animation-delay:.48s}
-@keyframes bar{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+.bars i{width:3px;height:18px;border-radius:9px;background:#fff;transform-origin:50% 50%;animation:bar 1.9s var(--ease-io) infinite alternate}
+.bars i:nth-child(2){animation-delay:.3s}.bars i:nth-child(3){animation-delay:.6s}.bars i:nth-child(4){animation-delay:.9s}.bars i:nth-child(5){animation-delay:1.2s}
+@keyframes bar{from{transform:scaleY(.45)}to{transform:scaleY(.85)}}
 .rec-time{font:800 17px/1 var(--display);font-variant-numeric:tabular-nums}
 .rec-hint{font:700 12px/1.3 var(--display);color:var(--blue-deep);margin-top:4px}
 .mv.pillv{background:none;box-shadow:none;padding:0}
@@ -378,6 +378,6 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <script src="/vendor/CustomEase.min.js" defer></script>
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/vendor/motion.min.js" defer></script>
-<script src="/site.js" defer></script>
+<script src="/site.js?v=28f95fc9fd" defer></script>
 </body>
 </html>
