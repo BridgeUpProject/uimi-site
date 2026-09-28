@@ -971,7 +971,7 @@
     undo.push(() => {
       if (typed) typed.textContent = typedFull;
       if (q(3, ".rec-time")) q(3, ".rec-time").textContent = "0:14";
-      qa(2, ".vis-chips span").forEach((c, j) => c.classList.toggle("on", j === 0));
+      qa(2, ".vis-chips span").forEach((c, j) => c.classList.toggle("on", j === 2));
       if (q(5, ".strong2")) q(5, ".strong2").textContent = "Strong";
     });
     const played = new Set();
@@ -1001,7 +1001,7 @@
       } else if (i === 2) {
         const chips = qa(2, ".vis-chips span");
         const tl = G.timeline();
-        [2, 4, 1, 0].forEach((k, n) => tl.call(() => chips.forEach((c, j) => c.classList.toggle("on", j === k)), null, n * 0.45));
+        [0, 4, 1, 2].forEach((k, n) => tl.call(() => chips.forEach((c, j) => c.classList.toggle("on", j === k)), null, n * 0.45));
       } else if (i === 3) {
         const el = q(3, ".rec-time");
         const o = { s: 0 };
