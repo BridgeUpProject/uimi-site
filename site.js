@@ -4,18 +4,18 @@
 // reduced motion (the founder's call). The Animations switch in the corner
 // turns it all off, live; that choice is remembered on the device
 // (localStorage "uimi.motion" = "off") and never leaves it. The switch is
-// also the pause control WCAG 2.2.2 asks for, since the rotating line, the
-// phone, the marquee and the voice line move on their own.
+// also the pause control WCAG 2.2.2 asks for, since the rotating lines, the
+// phone and the marquee move on their own.
 //
 // Libraries, all served from uimi.app: GSAP (ScrollTrigger, SplitText,
 // CustomEase, Flip, ScrambleText, Physics2D) runs the scroll choreography,
 // anime.js draws the underline and the privacy icons, drives the recording
-// waveform, morphs the voice line and ripples the dot grid, Motion gives the
-// pointer-driven pieces their springs, and Lenis smooths the scroll.
+// waveform and ripples the dot grid, Motion gives the pointer-driven pieces
+// and the feedback cards their springs, and Lenis smooths the scroll.
 // The waitlist and the demo work without any of them.
 (() => {
   "use strict";
-  const CONFIG = {"endpoint":"https://pnfkiiaagblozzxpvbua.supabase.co/functions/v1/join-waitlist","rotating":["Practice a college interview.","Handle an awkward silence.","Ask your teacher for an extension.","Join a group conversation.","Tell someone something bothered you.","Practice an upcoming speech.","Speak up when something feels unfair.","Ask for another opportunity.","Prepare for an internship interview.","Push back respectfully."],"attempts":{"a":{"label":"Mixed","color":"var(--amber-deep)","fill":[1,1,0],"meter":"var(--amber)","worked":"You asked for a specific new date.","quote":"“Could I maybe have until Thursday?”","way":"Hedges like “maybe” and “really” made the ask sound unsure.","words":["um","maybe","really"],"next":"Say the date first, then one reason, then stop.","cue":"Try this: pause for a beat after the date."},"b":{"label":"Strong","color":"var(--green)","fill":[1,1,1],"meter":"var(--green)","worked":"You led with the date, gave one reason, and stopped.","quote":"“Could I have until Thursday? A family thing took over my week.”","way":"Nothing major. The reason ran a little fast.","words":[],"next":"Keep that pause, and slow down on the reason.","cue":"Try this: land the last word, then stop."}}};
+  const CONFIG = {"endpoint":"https://pnfkiiaagblozzxpvbua.supabase.co/functions/v1/join-waitlist","rotating":["Practice a college interview.","Handle an awkward silence.","Ask your teacher for an extension.","Join a group conversation.","Tell someone something bothered you.","Practice an upcoming speech.","Speak up when something feels unfair.","Ask for another opportunity.","Prepare for an internship interview.","Push back respectfully."]};
   const root = document.documentElement;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -143,50 +143,6 @@
     ticket = null;
     fetch(CONFIG.endpoint, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ticket: once, role }) }).catch(() => {});
   }));
-
-  // ---------------------------------------------------------- the feedback demo: attempt 1 and 2
-  const toggle = $(".fb-card .toggle");
-  const card = $(".fb-card");
-  const perception = $("#perception");
-  const live = $("#perception-live");
-  const segs = $$(".meter3 b");
-  const slot = (k) => $(`.fb-card [data-k="${k}"]`);
-  const thumb = toggle && $(".thumb", toggle);
-  const voicePath = $(".voice .vp");
-  const voiceShape = (s) => ($(s === "b" ? "#v-b" : "#v-a") || {}).getAttribute?.("d");
-  let side = "a";
-  let manual = false;
-  function fillAttempt(s) {
-    for (const k of ["worked", "quote", "way", "next", "cue"]) {
-      const el = slot(k);
-      if (el) el.textContent = s[k];
-    }
-    const words = slot("words");
-    if (!words) return;
-    $$(".wchip", words).forEach((w) => w.remove());
-    s.words.forEach((w) => words.append(Object.assign(document.createElement("span"), { className: "wchip", textContent: `“${w}”` })));
-  }
-  function setSide(next) {
-    if (!toggle || next === side) return;
-    const t = thumb ? getComputedStyle(thumb).transform : "none";
-    const thumbFrom = t && t !== "none" ? new DOMMatrixReadOnly(t).m41 : 0;
-    side = next;
-    const s = CONFIG.attempts[next];
-    toggle.dataset.side = next;
-    card.dataset.side = next;
-    toggle.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.side === next)));
-    live.textContent = `Attempt ${next === "a" ? 1 : 2} likely landed as ${s.label}`;
-    perception.style.color = s.color;
-    segs.forEach((b, i) => { b.style.transform = `scaleX(${s.fill[i]})`; });
-    if (hooks.side) {
-      hooks.side(next, s, thumbFrom);
-    } else {
-      perception.textContent = s.label;
-      fillAttempt(s);
-      if (voicePath && voiceShape(next)) voicePath.setAttribute("d", voiceShape(next));
-    }
-  }
-  toggle?.querySelectorAll("button").forEach((btn) => btn.addEventListener("click", () => { manual = true; setSide(btn.dataset.side); }));
 
   // ---------------------------------------------------------- situations: tabs by practice area
   // Without scripts every area shows as a list; with them, one at a time.
@@ -356,7 +312,6 @@
     ensureSwoosh();
     buildDots();
     placeInd(false);
-    if (voicePath && voiceShape(side)) voicePath.setAttribute("d", voiceShape(side));
     return () => {};
   }
 
@@ -704,54 +659,14 @@
       }
 
 
-      // The feedback card: the voice line wavers on the first attempt and
-      // steadies on the second (anime.js morph), the verdict decodes itself
-      // (ScrambleText), the thumb springs across and the flagged words pop
-      // in (Motion).
-      const voiceSvg = $(".voice svg");
-      let travel = null;
-      if (voiceSvg) {
-        travel = G.to(voiceSvg, { xPercent: -50, duration: 7, ease: "none", repeat: -1 });
-        travel.timeScale(side === "a" ? 4.2 : 1);
-        ST.create({ trigger: ".product", start: "top bottom", end: "bottom top", onToggle: (self) => (self.isActive ? travel.resume() : travel.pause()) });
-      }
-      if (voicePath && voiceShape(side)) voicePath.setAttribute("d", voiceShape(side));
-      const popWords = () =>
-        $$(".fb-card .wchip").forEach((w, i) => spring(w, { opacity: [0, 1], transform: ["scale(0.8)", "scale(1)"] }, { type: "spring", stiffness: 420, damping: 16, delay: 0.12 + i * 0.1 }));
-      let thumbRun = 0;
-      hooks.side = inCtx((next, s, thumbFrom) => {
-        if (window.ScrambleTextPlugin) G.to(perception, { duration: 0.8, scrambleText: { text: s.label, chars: "lowerCase", speed: 0.5, revealDelay: 0.2 }, ease: "none", overwrite: true });
-        else perception.textContent = s.label;
-        G.to(".fb-blocks", {
-          autoAlpha: 0,
-          y: 8,
-          duration: 0.18,
-          overwrite: true,
-          onComplete: inCtx(() => {
-            fillAttempt(s);
-            G.to(".fb-blocks", { autoAlpha: 1, y: 0, duration: 0.45, ease });
-            popWords();
-          }),
-        });
-        if (travel) G.to(travel, { timeScale: next === "a" ? 4.2 : 1, duration: 0.8, ease: "power2.out", overwrite: true });
-        if (A && voicePath && voiceShape(next)) animes.push(A.animate(voicePath, { d: A.svg.morphTo(next === "b" ? "#v-b" : "#v-a", 0), duration: 700, ease: "inOutQuad" }));
-        if (thumb && M) {
-          const run = ++thumbRun;
-          const to = next === "b" ? thumb.offsetWidth + 8 : 0;
-          spring(thumb, { transform: [`translateX(${thumbFrom}px)`, `translateX(${to}px)`] }, { type: "spring", stiffness: 420, damping: 32 })
-            ?.then(() => { if (run === thumbRun) thumb.style.transform = ""; });
-        }
-      });
-      undo.push(() => {
-        hooks.side = null;
-        const s = CONFIG.attempts[side];
-        if (perception) perception.textContent = s.label;
-        fillAttempt(s);
-        if (voicePath && voiceShape(side)) voicePath.setAttribute("d", voiceShape(side));
-      });
-      if (M && card && below(card)) {
-        $$(".fb-card .wchip").forEach((w) => { w.style.opacity = "0"; springs.set(w, null); });
-        undo.push(M.inView(".fb-card .words", () => popWords(), { amount: 0.8 }));
+      // The feedback cards pop in on a spring once they come into view
+      // (Motion), the next move last, because it is the one that matters.
+      const fbCards = $$(".fb3 .core");
+      if (M && fbCards.length && below(fbCards[0])) {
+        fbCards.forEach((el) => { el.style.opacity = "0"; springs.set(el, null); });
+        undo.push(M.inView(".fb3", () => {
+          fbCards.forEach((el, i) => spring(el, { opacity: [0, 1], transform: ["translateY(18px) scale(0.97)", "translateY(0px) scale(1)"] }, { type: "spring", stiffness: 300, damping: 22, delay: 0.1 + i * 0.14 }));
+        }, { amount: 0.35 }));
       }
 
       // ------------------------------------------------ generic reveals
@@ -780,7 +695,7 @@
 
       // Cards lift off their trays under the pointer (Motion springs).
       if (fine && M) {
-        const lift = M.hover($$(".pgrid li > div"), (el) => {
+        const lift = M.hover($$(".pgrid li > div, .fb3 .core"), (el) => {
           spring(el, { transform: "translateY(-6px)" }, { type: "spring", stiffness: 300, damping: 22 });
           return () => spring(el, { transform: "translateY(0px)" }, { type: "spring", stiffness: 300, damping: 26 });
         });
@@ -1033,66 +948,106 @@
     });
 
 
-    // ------------------------------------------------ how it works + the demo
+    // ------------------------------------------------ how it works: the practice loop
     // Built outside ctx: matchMedia runs its own contexts, and a context
     // that is active inside another one must never add to its parent.
-    const cards = $$("[data-step]");
+    const steps = $$("[data-step]");
+    const q = (i, sel) => (steps[i] ? $(sel, steps[i]) : null);
+    const qa = (i, sel) => (steps[i] ? $$(sel, steps[i]) : []);
+    // Steps still below the fold start from their "before" state and play
+    // in; anything already on screen is left as it is.
+    const primed = steps.map((st) => below(st));
+    const typed = q(1, ".typed");
+    const typedFull = typed ? typed.textContent : "";
+    ctx.add(() => {
+      if (primed[1] && typed) typed.textContent = "";
+      if (primed[3] && q(3, ".rec-time")) q(3, ".rec-time").textContent = "0:00";
+      if (primed[4]) G.set([q(4, ".fm-verdict"), ...qa(4, ".fm-obs span"), q(4, ".fm-next")].filter(Boolean), { autoAlpha: 0 });
+      if (primed[5]) G.set([...qa(5, ".att"), ...qa(5, ".att-arrow")], { autoAlpha: 0 });
+    });
+    undo.push(() => {
+      if (typed) typed.textContent = typedFull;
+      if (q(3, ".rec-time")) q(3, ".rec-time").textContent = "0:14";
+      qa(2, ".vis-chips span").forEach((c, j) => c.classList.toggle("on", j === 0));
+      if (q(5, ".strong2")) q(5, ".strong2").textContent = "Strong";
+    });
     const played = new Set();
     const playStep = inCtx((i) => {
-      if (played.has(i)) return;
+      if (played.has(i) || !steps[i]) return;
       played.add(i);
-      const card = cards[i];
       if (i === 0) {
-        const chips = $$(".vis-chips span", card);
+        // Real situations take turns in the pill while the section is on screen.
+        const text = q(0, ".sit-text");
+        const list = ["College interview", "Ask a teacher for help", "Join a group", "Push back respectfully", "Tell someone something bothered you", "Practice an upcoming speech"];
+        if (!text) return;
+        const tl = G.timeline({ repeat: -1, delay: 1.2 });
+        [...list.slice(1), list[0]].forEach((t) => {
+          tl.to(text, { yPercent: -100, autoAlpha: 0, duration: 0.28, ease: "power2.out" }, "+=1.7")
+            .call(() => { text.textContent = t; })
+            .fromTo(text, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.42, ease, immediateRender: false });
+        });
+        ST.create({ trigger: "#how", start: "top bottom", end: "bottom top", onToggle: (self) => (self.isActive ? tl.resume() : tl.pause()) });
+        undo.push(() => { text.textContent = list[0]; });
+        return;
+      }
+      if (!primed[i]) return;
+      if (i === 1 && typed) {
+        // The personal detail types itself in.
+        const o = { n: 0 };
+        G.to(o, { n: typedFull.length, duration: typedFull.length * 0.03, ease: "none", delay: 0.25, onUpdate: () => { typed.textContent = typedFull.slice(0, Math.round(o.n)); } });
+      } else if (i === 2) {
+        const chips = qa(2, ".vis-chips span");
         const tl = G.timeline();
         [2, 4, 1, 0].forEach((k, n) => tl.call(() => chips.forEach((c, j) => c.classList.toggle("on", j === k)), null, n * 0.45));
-        undo.push(() => chips.forEach((c, j) => c.classList.toggle("on", j === 0)));
-      } else if (i === 1) {
-        const el = $(".rec-time", card);
+      } else if (i === 3) {
+        const el = q(3, ".rec-time");
         const o = { s: 0 };
         G.to(o, { s: 14, duration: 2.4, ease: "none", onUpdate: () => { el.textContent = "0:" + String(Math.floor(o.s)).padStart(2, "0"); } });
-        undo.push(() => { el.textContent = "0:14"; });
-      } else {
-        G.fromTo($$(".meter.green i", card), { scaleX: 0 }, { scaleX: 1, stagger: 0.16, duration: 0.8, ease });
-        G.fromTo($(".strong", card), { yPercent: 50, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease });
-        G.fromTo($(".next-line", card), { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease, delay: 0.5 });
+      } else if (i === 4) {
+        // The reading, then a couple of observations, then the one move
+        // that matters, last and loudest.
+        G.timeline({ delay: 0.15 })
+          .fromTo(q(4, ".fm-verdict"), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease })
+          .fromTo(qa(4, ".fm-obs span"), { scale: 0.85, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.12 }, "+=.05")
+          .fromTo(q(4, ".fm-next"), { y: 12, scale: 0.96, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.6, ease: "back.out(1.6)" }, "+=.1");
+      } else if (i === 5) {
+        // The loop: attempt one, the move, attempt two, which decodes into
+        // its better result (ScrambleText).
+        const [a1, mid, a2] = qa(5, ".att");
+        const [next1, next2] = qa(5, ".att-arrow");
+        const strong = q(5, ".strong2");
+        const tl = G.timeline({ delay: 0.2 })
+          .fromTo(a1, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease })
+          .fromTo(next1, { x: -6, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(3)" }, "+=.05")
+          .fromTo(mid, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease }, "+=.05")
+          .fromTo(next2, { x: -6, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(3)" }, "+=.05")
+          .fromTo(a2, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease }, "+=.05");
+        if (strong && window.ScrambleTextPlugin) tl.to(strong, { duration: 0.8, scrambleText: { text: "Strong", chars: "lowerCase", speed: 0.5 }, ease: "none" }, "<");
       }
     });
 
     mm.add("(min-width: 1024px)", () => {
-      // How it works: the three cards are dealt from a stack into their row
-      // as the section comes into view (no pinning, no extra scrolling),
-      // then each plays its little demo.
-      if (cards.length === 3 && below(cards[0])) {
-        const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
-        G.set(cards[0], { zIndex: 3, x: () => step(), rotation: -5, y: 16, scale: 0.94 });
-        G.set(cards[1], { zIndex: 2, rotation: 3, y: 8, scale: 0.94 });
-        G.set(cards[2], { zIndex: 1, x: () => -step(), rotation: -2, y: 24, scale: 0.94 });
+      // Desktop: the six cards are laid down in order, then each plays its
+      // little demo.
+      const grid = $(".steps");
+      if (grid && steps.length && below(grid)) {
+        G.set(steps, { y: 40, rotateX: 10, autoAlpha: 0, transformPerspective: 900, transformOrigin: "50% 100%" });
         ST.create({
-          trigger: ".steps",
-          start: "top 72%",
+          trigger: grid,
+          start: "top 75%",
           once: true,
           onEnter: inCtx(() => {
-            G.to(cards, { x: 0, y: 0, rotation: 0, scale: 1, duration: 1.1, ease, stagger: 0.09 });
-            cards.forEach((c, i) => G.delayedCall(0.85 + i * 0.15, () => playStep(i)));
+            G.to(steps, { y: 0, rotateX: 0, autoAlpha: 1, duration: 0.9, ease, stagger: 0.08 });
+            steps.forEach((st, i) => G.delayedCall(0.55 + i * 0.2, () => playStep(i)));
           }),
         });
-      } else cards.forEach((c, i) => ST.create({ trigger: c, start: "top 85%", once: true, onEnter: () => playStep(i) }));
+      } else steps.forEach((st, i) => ST.create({ trigger: st, start: "top 85%", once: true, onEnter: () => playStep(i) }));
     });
     mm.add("(max-width: 1023px)", () => {
-      cards.forEach((c, i) => {
-        if (below(c)) G.fromTo(c, { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, ease, scrollTrigger: { trigger: c, start: "top 97%", once: true } });
-        ST.create({ trigger: c, start: "top 80%", once: true, onEnter: () => playStep(i) });
+      steps.forEach((st, i) => {
+        if (below(st)) G.fromTo(st, { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85, ease, scrollTrigger: { trigger: st, start: "top 97%", once: true } });
+        ST.create({ trigger: st, start: "top 82%", once: true, onEnter: () => playStep(i) });
       });
-    });
-
-    // The feedback: pinned where it fits, and the second attempt takes over
-    // halfway through; elsewhere it flips on its own once seen.
-    mm.add("(min-width: 1024px) and (min-height: 820px)", () => {
-      ST.create({ trigger: ".product", start: "center center", end: "+=110%", pin: true, onUpdate: (self) => { if (!manual) setSide(self.progress > 0.5 ? "b" : "a"); } });
-    });
-    mm.add("(max-width: 1023px), (max-height: 819px)", () => {
-      ST.create({ trigger: ".fb-card .toggle", start: "top 62%", once: true, onEnter: () => later(() => { if (!manual) setSide("b"); }, 1800) });
     });
 
     ST.sort();
@@ -1112,8 +1067,11 @@
         el.style.opacity = "";
         el.style.clipPath = "";
       });
-      mm.revert();
+      // Newest first: callback animations were made after the screen-size
+      // sets, which were made after the main build; undoing them out of
+      // order would restore a half-way state (the cards' dealt-from pile).
       late.revert();
+      mm.revert();
       ctx.revert();
       undo.reverse().forEach((fn) => { try { fn(); } catch {} });
     };
