@@ -1055,43 +1055,35 @@
       } else {
         G.fromTo($$(".meter.green i", card), { scaleX: 0 }, { scaleX: 1, stagger: 0.16, duration: 0.8, ease });
         G.fromTo($(".strong", card), { yPercent: 50, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease });
+        G.fromTo($(".next-line", card), { y: 8, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease, delay: 0.5 });
       }
     });
 
-    mm.add("(min-width: 1024px) and (min-height: 700px)", () => {
-      // How it works: the three cards start as a dealt stack and spread
-      // into place as you scroll; each plays its little demo on landing.
-      if (cards.length === 3) {
+    mm.add("(min-width: 1024px)", () => {
+      // How it works: the three cards are dealt from a stack into their row
+      // as the section comes into view (no pinning, no extra scrolling),
+      // then each plays its little demo.
+      if (cards.length === 3 && below(cards[0])) {
         const step = () => cards[1].offsetLeft - cards[0].offsetLeft;
-        G.set(cards[0], { zIndex: 3 });
-        G.set(cards[1], { zIndex: 2 });
-        G.set(cards[2], { zIndex: 1 });
-        const tl = G.timeline({
-          defaults: { ease: "none" },
-          scrollTrigger: { trigger: ".how-stage", start: "center center", end: () => "+=" + Math.round(innerHeight * 1.1), pin: true, scrub: 0.8, invalidateOnRefresh: true },
+        G.set(cards[0], { zIndex: 3, x: () => step(), rotation: -5, y: 16, scale: 0.94 });
+        G.set(cards[1], { zIndex: 2, rotation: 3, y: 8, scale: 0.94 });
+        G.set(cards[2], { zIndex: 1, x: () => -step(), rotation: -2, y: 24, scale: 0.94 });
+        ST.create({
+          trigger: ".steps",
+          start: "top 72%",
+          once: true,
+          onEnter: inCtx(() => {
+            G.to(cards, { x: 0, y: 0, rotation: 0, scale: 1, duration: 1.1, ease, stagger: 0.09 });
+            cards.forEach((c, i) => G.delayedCall(0.85 + i * 0.15, () => playStep(i)));
+          }),
         });
-        tl.fromTo(cards[0], { x: () => step(), rotation: -5, y: 16, scale: 0.94 }, { x: 0, rotation: 0, y: 0, scale: 1, duration: 1 }, 0)
-          .fromTo(cards[1], { rotation: 3, y: 8, scale: 0.94 }, { rotation: 0, y: 0, scale: 1, duration: 1 }, 0.12)
-          .fromTo(cards[2], { x: () => -step(), rotation: -2, y: 24, scale: 0.94 }, { x: 0, rotation: 0, y: 0, scale: 1, duration: 1 }, 0.24)
-          .to(".how-progress i", { scaleX: 1, duration: 1.3 }, 0);
-        cards.forEach((c, i) => tl.call(() => playStep(i), null, 0.9 + i * 0.12));
-      }
+      } else cards.forEach((c, i) => ST.create({ trigger: c, start: "top 85%", once: true, onEnter: () => playStep(i) }));
     });
-    mm.add("(max-width: 1023px), (max-height: 699px)", () => {
+    mm.add("(max-width: 1023px)", () => {
       cards.forEach((c, i) => {
-        if (below(c)) G.fromTo(c, { y: 60, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1.1, ease, scrollTrigger: { trigger: c, start: "top 88%", once: true } });
-        ST.create({ trigger: c, start: "top 72%", once: true, onEnter: () => playStep(i) });
+        if (below(c)) G.fromTo(c, { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, ease, scrollTrigger: { trigger: c, start: "top 97%", once: true } });
+        ST.create({ trigger: c, start: "top 80%", once: true, onEnter: () => playStep(i) });
       });
-      // On tall phones the cards stack up as you scroll.
-      let stacked = false;
-      if (innerWidth < 1024 && innerHeight >= 640) {
-        stacked = true;
-        cards.forEach((c, i) => { c.style.position = "sticky"; c.style.top = 84 + i * 14 + "px"; });
-        cards.slice(0, -1).forEach((c, i) =>
-          G.to(c, { scale: 0.94, transformOrigin: "50% 0%", ease: "none", scrollTrigger: { trigger: cards[i + 1], start: "top 92%", end: "top " + (84 + (i + 1) * 14) + "px", scrub: true } })
-        );
-      }
-      return () => { if (stacked) cards.forEach((c) => { c.style.position = ""; c.style.top = ""; }); };
     });
 
     // The feedback: pinned where it fits, and the second attempt takes over
