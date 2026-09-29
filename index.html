@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UIMI: Better conversations. A brighter you.</title>
+<title>UIMI: Say it out loud. See how you came across.</title>
 <meta name="description" content="UIMI is a private practice room for students. Pick a real situation, make it yours, say it out loud, and see how you likely came across. Join the waitlist.">
 <link rel="canonical" href="https://uimi.app/">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://uimi.app/">
-<meta property="og:title" content="UIMI: Better conversations. A brighter you.">
+<meta property="og:title" content="UIMI: Say it out loud. See how you came across.">
 <meta property="og:description" content="UIMI is a private practice room for students. Pick a real situation, make it yours, say it out loud, and see how you likely came across. Join the waitlist.">
 <meta property="og:image" content="https://uimi.app/og.png">
 <meta property="og:image:width" content="1200">
@@ -22,21 +22,27 @@
 <meta name="theme-color" content="#F8F7F4">
 <link rel="preload" href="/fonts/Manrope_800ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/PlusJakartaSans_500Medium.woff2" as="font" type="font/woff2" crossorigin>
-<script>(function(d){var m=null;try{m=localStorage.getItem("uimi.motion")}catch(e){}d.setAttribute("data-motion",m==="off"?"off":"on");d.classList.add("js");setTimeout(function(){d.classList.add("ready")},3500)})(document.documentElement)</script>
+<link rel="preload" href="/fonts/Manrope_700Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Fredoka_700Bold.woff2" as="font" type="font/woff2" crossorigin>
+<script>(function(d){d.classList.add("js");try{localStorage.removeItem("uimi.motion")}catch(e){}setTimeout(function(){d.classList.add("ready");if(!window.uimiRan)d.classList.remove("js")},3500)})(document.documentElement)</script>
 <style>
 @font-face{font-family:Fredoka;src:url(/fonts/Fredoka_700Bold.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:Manrope;src:url(/fonts/Manrope_700Bold.woff2) format("woff2");font-weight:700;font-display:swap}
 @font-face{font-family:Manrope;src:url(/fonts/Manrope_800ExtraBold.woff2) format("woff2");font-weight:800;font-display:swap}
 @font-face{font-family:"Plus Jakarta Sans";src:url(/fonts/PlusJakartaSans_500Medium.woff2) format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Plus Jakarta Sans";src:url(/fonts/PlusJakartaSans_600SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Manrope Fallback";src:local("Arial Bold"),local("Arial-BoldMT");font-weight:800;size-adjust:101.9%;ascent-override:105.01%;descent-override:29.44%;line-gap-override:0%}
+@font-face{font-family:"Manrope Fallback";src:local("Arial Bold"),local("Arial-BoldMT");font-weight:700;size-adjust:100.24%;ascent-override:106.75%;descent-override:29.93%;line-gap-override:0%}
+@font-face{font-family:"Jakarta Fallback";src:local("Arial"),local("ArialMT");font-weight:500;size-adjust:104.99%;ascent-override:99.06%;descent-override:20.96%;line-gap-override:0%}
+@font-face{font-family:"Jakarta Fallback";src:local("Arial Bold"),local("Arial-BoldMT");font-weight:600;size-adjust:99.81%;ascent-override:104.2%;descent-override:22.04%;line-gap-override:0%}
 
 :root{--charcoal:#2F3740;--ink-soft:#3E4A57;--blue:#6B8FCA;--blue-deep:#4A6EA9;--blue-soft:#EEF2F9;--blue-tint:#EDF1F8;--off:#F8F7F4;--gray:#D9DEE4;--slate:#56677C;--muted:#606D7C;--white:#fff;--green:#35674F;--green-soft:#E4EEE8;--amber:#C98A4B;--amber-deep:#A8562F;--tan:#F6EFE3;
---ring:rgba(47,55,64,.07);--tray:rgba(47,55,64,.035);--soft-shadow:0 30px 60px -30px rgba(47,55,64,.22),0 12px 24px -18px rgba(47,55,64,.12);--display:Manrope,system-ui,-apple-system,sans-serif;--ease:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1)}
+--ring:rgba(47,55,64,.07);--tray:rgba(47,55,64,.035);--soft-shadow:0 30px 60px -30px rgba(47,55,64,.22),0 12px 24px -18px rgba(47,55,64,.12);--display:Manrope,"Manrope Fallback",system-ui,-apple-system,sans-serif;--ease:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1)}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
-body{margin:0;background:var(--off);color:var(--charcoal);font:500 17px/1.6 "Plus Jakarta Sans",system-ui,-apple-system,sans-serif}
+body{margin:0;background:var(--off);color:var(--charcoal);font:500 17px/1.6 "Plus Jakarta Sans","Jakarta Fallback",system-ui,-apple-system,sans-serif}
 main{overflow-x:clip}
 a{color:var(--blue-deep);text-underline-offset:3px}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
@@ -49,13 +55,23 @@ a{color:var(--blue-deep);text-underline-offset:3px}
 @media (max-width:767px){.wrap{padding:0 18px}}
 .progress{position:fixed;left:0;top:0;height:2px;width:100%;background:var(--blue);transform-origin:0 50%;transform:scaleX(0);z-index:21;pointer-events:none}
 .nav{position:fixed;top:14px;left:0;right:0;margin:0 auto;width:max-content;z-index:20;display:flex;align-items:center;gap:6px;padding:6px 6px 6px 18px;border-radius:999px;background:rgba(255,255,255,.72);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);box-shadow:0 0 0 1px var(--ring),0 18px 40px -24px rgba(47,55,64,.35);white-space:nowrap;max-width:calc(100% - 24px)}
-.nav .wordmark{font-size:24px;margin-right:14px}
+.nav-brand{display:inline-flex;flex-direction:column;align-items:flex-start;gap:5px;margin-right:14px}
+.nav .wordmark{font-size:24px}
+.nav-tag{font:800 10px/1 var(--display);letter-spacing:.02em;color:var(--slate)}
+@media (max-width:359px){.nav-tag{display:none}}
 .nav-links{position:relative;display:flex;align-items:center}
 .nav-hl{position:absolute;left:0;top:3px;bottom:3px;width:100%;border-radius:999px;background:rgba(47,55,64,.07);opacity:0;pointer-events:none}
 .nav a.link{position:relative;font:700 14px/1 var(--display);color:var(--slate);text-decoration:none;padding:12px 12px;border-radius:999px;transition:color .3s var(--ease)}
 .nav a.link.on{color:var(--charcoal)}
 @media (hover:hover) and (pointer:fine){.nav a.link:hover{color:var(--charcoal)}}
 @media (max-width:760px){.nav-links{display:none}.nav{padding-left:14px}}
+.masthead{position:relative;z-index:2;padding:16px 0 0}
+.masthead .wrap{display:flex;align-items:center;gap:18px}
+.masthead .wordmark{font-size:clamp(46px,4.4vw,62px)}
+.masthead-tag{font:800 clamp(11.5px,1.05vw,14px)/1.3 var(--display);letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);padding:5px 0 5px 18px;box-shadow:inset 2px 0 0 rgba(107,143,202,.5)}
+@media (max-width:359px){.masthead .wrap{gap:14px}.masthead-tag{letter-spacing:.16em;padding-left:14px}}
+.landing .nav{left:auto;right:max(12px,calc((100% - 1200px) / 2 + 24px));margin:0;padding:6px}
+@media (max-width:1023px){html:not(.motion-on) .landing .nav{display:none}}
 .wordmark{font:700 30px/1 Fredoka,var(--display);color:var(--charcoal);text-decoration:none;letter-spacing:-.3px;display:inline-flex;align-items:flex-end}
 .wordmark .i{position:relative;display:inline-block}
 .wordmark .dot{position:absolute;left:50%;top:-.16em;width:.26em;height:.26em;margin-left:-.13em;border-radius:50%;background:var(--blue)}
@@ -81,24 +97,21 @@ section{padding:clamp(96px,14vw,168px) 0}
 .sec-head h2{margin-top:22px}
 .bezel{padding:6px;border-radius:32px;background:var(--tray);box-shadow:0 0 0 1px var(--ring)}
 .core{background:#fff;border-radius:26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),var(--soft-shadow)}
-.hero{min-height:100dvh;display:flex;align-items:center;padding:128px 0 72px}
+.hero{min-height:calc(100dvh - 80px);display:flex;align-items:center;padding:40px 0 72px}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:56px;align-items:center}
-@media (max-width:980px){.hero{min-height:0;padding:100px 0 56px}.hero-grid{grid-template-columns:1fr;gap:44px}}
+@media (max-width:980px){.hero{min-height:0;padding:34px 0 56px}.hero-grid{grid-template-columns:1fr;gap:44px}}
 .hero h1{margin-top:22px;text-transform:uppercase;letter-spacing:-.02em;line-height:.98;font-size:clamp(27px,8.3vw,64px)}
 @media (min-width:981px){.hero h1{font-size:clamp(40px,3.95vw,60px)}}
-.hero h1 .accent{color:var(--blue-deep)}
+.hero h1 .accent{display:block;color:var(--blue-deep)}
 .hero h1 .mark{position:relative;display:inline-block}
+.hero-penguin{display:inline-block;width:1.06em;margin:0 .16em 0 -.02em;vertical-align:-.1em;transform-origin:50% 100%;cursor:pointer}
+.hero-penguin svg{display:block;width:100%;height:auto;overflow:visible}
 .swoosh{position:absolute;left:-3%;top:88%;width:106%;height:auto;overflow:visible;pointer-events:none}
 .swoosh path{fill:none;stroke:var(--blue);stroke-width:6;stroke-linecap:round}
 .hero .lede{margin-top:20px}
-.rotator{display:flex;align-items:flex-start;gap:12px;margin:20px 0 0;max-width:560px;font:800 clamp(16px,1.5vw,18px)/1.35 var(--display);letter-spacing:-.01em;color:var(--blue-deep)}
-.rot-dot{flex:none;width:10px;height:10px;margin-top:.42em;border-radius:50%;background:var(--blue);box-shadow:0 0 0 5px rgba(107,143,202,.16)}
-.rot-window{position:relative;flex:1;min-width:0;height:1.35em;overflow:hidden}
-@media (max-width:560px){.rot-window{height:2.7em}}
-.rot-text{position:absolute;left:0;top:0;right:0}
 .join{margin-top:28px;max-width:560px}
 .field{display:flex;align-items:center;gap:8px;padding:6px 6px 6px 22px;border-radius:999px}
-.field input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:500 17px/1.2 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--charcoal);padding:14px 0;outline:none}
+.field input[type=email]{flex:1;min-width:0;border:0;background:transparent;font:500 17px/1.2 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;color:var(--charcoal);padding:14px 0;outline:none}
 .field:focus-within{box-shadow:0 0 0 3px rgba(107,143,202,.28),var(--soft-shadow)}
 .field.invalid{box-shadow:0 0 0 2px #B5534F,var(--soft-shadow)}
 @media (max-width:520px){.field{flex-direction:column;align-items:stretch;border-radius:26px;padding:6px}.field input[type=email]{padding:14px 16px}.field .btn{justify-content:space-between}}
@@ -126,55 +139,29 @@ section{padding:clamp(96px,14vw,168px) 0}
 .share{display:flex;gap:10px;flex-wrap:wrap}
 .share button{font:700 14px/1 var(--display);background:var(--blue-soft);color:var(--blue-deep);border:0;border-radius:999px;padding:13px 16px;cursor:pointer;transition:scale .14s var(--ease)}
 .share button:active{scale:.97}
-.stage{position:relative;perspective:1400px;display:flex;justify-content:center;padding:24px 0}
-.phone-wrap{position:relative;transform-style:preserve-3d}
+.stage{position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 0}
 .phone{width:min(330px,78vw);border-radius:52px;padding:10px;background:var(--tray);box-shadow:0 0 0 1px var(--ring),0 60px 120px -50px rgba(47,55,64,.45),0 30px 60px -40px rgba(47,55,64,.3)}
-.screen{display:grid;background:var(--off);border-radius:44px;padding:30px 20px 20px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
-.scr{grid-area:1/1;min-width:0}
-.scr.s-pick,.scr.s-rec{visibility:hidden}
-.screen .top{font:800 10px/1 var(--display);letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:18px;display:flex;justify-content:space-between;gap:10px}
-.screen .lbl{font:800 10px/1.3 var(--display);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
-.screen .want{font:800 17px/1.2 var(--display);color:var(--slate);margin:5px 0 14px}
-.screen .verdict{font:800 42px/1 var(--display);letter-spacing:-.045em;color:var(--amber-deep);margin:5px 0 12px}
-.meter{display:flex;gap:5px}.meter i{flex:1;height:6px;border-radius:9px;background:#E4E2DD;overflow:hidden}.meter b{display:block;height:100%;background:var(--amber);border-radius:9px;transform-origin:0 50%}
-.mlabels{display:flex;justify-content:space-between;font:700 9.5px/1 var(--display);color:var(--muted);margin:7px 0 14px}
+.screen{display:flex;flex-direction:column;height:var(--screen-h,468px);background:var(--off);border-radius:44px;padding:30px 20px 20px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
+@media (max-width:422px){.screen{--screen-h:488px}}
+@media (max-width:340px){.screen{--screen-h:514px}}
+.fb-head{margin:0 0 12px;font:700 12.5px/1.3 var(--display);color:var(--muted)}
+.fb-result{margin:0 0 14px;font:700 20px/1.25 var(--display);letter-spacing:-.02em;color:var(--charcoal)}
+.fb-result b{font-weight:800}
+.fb-result .aim{color:var(--blue-deep)}
+.fb-result .got{color:var(--amber-deep)}
+.meter{display:flex;gap:5px}.meter i{flex:1;height:5px;border-radius:9px;background:#E4E2DD;overflow:hidden}.meter b{display:block;height:100%;background:var(--amber);border-radius:9px;transform-origin:0 50%}
+.mlabels{display:flex;justify-content:space-between;margin:7px 0 14px;font:700 10px/1 var(--display);color:var(--muted)}
+.mlabels .on{color:var(--amber-deep)}
 .screen .line{font-size:13.5px;line-height:1.45;margin:0 0 12px}
 .mini{background:#fff;border-radius:18px;padding:12px 13px;margin-top:8px;box-shadow:0 0 0 1px var(--ring)}
 .mini.blue{background:var(--blue-soft);box-shadow:0 0 0 1px rgba(107,143,202,.28)}
-.dotlbl{display:inline-flex;align-items:center;gap:7px;font:800 9.5px/1 var(--display);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.dotlbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--blue))}
+.mlbl{display:inline-flex;align-items:center;gap:7px;font:800 12px/1 var(--display);color:var(--slate)}
+.mlbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--blue))}
 .mini p{margin:7px 0 0;font:700 13.5px/1.4 var(--display);letter-spacing:-.01em}
-.mini .q{margin-top:8px;background:var(--off);border-radius:11px;padding:9px 10px;font-style:italic;font-size:12.5px;line-height:1.4}
-.sit{background:#fff;border-radius:18px;padding:13px 14px;margin:8px 0 16px;box-shadow:0 0 0 1px var(--ring)}
-.sit b{display:block;font:800 17px/1.2 var(--display);letter-spacing:-.02em}
-.sit p{margin:7px 0 0;font-size:12.5px;line-height:1.45;color:var(--slate)}
-.pchips{position:relative;display:flex;flex-wrap:wrap;gap:6px;margin:9px 0 18px}
-.pchips span{position:relative;z-index:1;font:800 12px/1 var(--display);padding:10px 12px;border-radius:999px;color:var(--slate);box-shadow:0 0 0 1px var(--ring);background:#fff;transition:color .3s var(--ease),background-color .3s var(--ease)}
-.pchips span.on{color:#fff;background:var(--blue-deep)}
-.pchips .chip-hl{position:absolute;z-index:0;left:0;top:0;width:100%;height:100%;border-radius:999px;background:var(--blue-deep);opacity:0}
-.pchips.js-hl span.on{background:transparent}
-.pchips span.on{box-shadow:none}
-.go{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:16px;background:var(--charcoal);color:#fff;font:800 14px/1 var(--display)}
-.cap{font:700 17px/1.4 var(--display);letter-spacing:-.015em;margin:9px 0 16px;min-height:4.2em}
-.cap span{opacity:.2}
-.wave{display:flex;align-items:center;justify-content:center;gap:3px;height:64px;margin:0 0 16px}
-.wave i{flex:none;width:4px;height:100%;border-radius:9px;background:var(--blue-deep);transform:scaleY(.18)}
-.rrow{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;padding:12px 14px 12px 12px;box-shadow:0 0 0 1px var(--ring)}
-.rdot{position:relative;flex:none;width:50px;height:50px;border-radius:18px;background:var(--blue-deep);display:grid;place-items:center}
-.rdot::before{content:"";position:absolute;inset:0;border-radius:18px;background:var(--blue);opacity:.35;animation:pulse 2.4s var(--ease) infinite}
-.rdot b{position:relative;width:15px;height:15px;border-radius:5px;background:#fff}
-.timer{font:800 21px/1 var(--display);font-variant-numeric:tabular-nums}
-.rrow small{display:block;font:700 12px/1.3 var(--display);color:var(--blue-deep);margin-top:5px}
-.sat{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:11px 15px;font:800 13.5px/1 var(--display);box-shadow:0 0 0 1px var(--ring),0 24px 40px -22px rgba(47,55,64,.35)}
-.sat i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--blue))}
-.sat.s1{left:-6%;top:14%}.sat.s2{right:-8%;top:36%}.sat.s3{left:-10%;bottom:20%}.sat.s4{right:-4%;bottom:6%;background:var(--charcoal);color:#fff}
-@media (max-width:980px){.sat.s1{left:2%}.sat.s2{right:0}.sat.s3{left:0}.sat.s4{right:2%}}
-@media (max-width:640px){.sat{font-size:12px;padding:9px 12px}.sat.s3,.sat.s2{display:none}.sat.s1{top:-4px;left:6%}.sat.s4{bottom:-2px;right:6%}}
-.marquee{padding:36px 0 12px;display:grid;gap:12px}
-.mrow{display:flex;width:max-content;gap:12px;padding-right:12px}
-.mrow span{flex:none;background:#fff;border-radius:999px;padding:14px 20px;font:700 15.5px/1 var(--display);color:var(--ink-soft);box-shadow:0 0 0 1px var(--ring)}
-.mrow span.b{background:var(--blue-soft);color:var(--blue-deep);box-shadow:none}
-.marquee-mask{overflow:hidden}
+.next-chip{position:relative;z-index:2;margin-top:-18px;background:var(--charcoal);color:#fff;border-radius:999px;padding:10px 15px;font:800 13px/1 var(--display);box-shadow:0 0 0 1px var(--ring),0 24px 40px -22px rgba(47,55,64,.35)}
+.sit{background:#fff;border-radius:14px;padding:11px 12px;box-shadow:0 0 0 1px var(--ring)}
+.sit b{display:block;font:800 15px/1.2 var(--display);letter-spacing:-.02em}
+.sit p{margin:6px 0 0;font-size:12.5px;line-height:1.45;color:var(--slate)}
 [data-scrub] .word{display:inline-block}
 [data-scrub]{position:relative;z-index:0}
 [data-scrub] .hl{background:rgba(107,143,202,.3);border-radius:.14em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -183,19 +170,19 @@ section{padding:clamp(96px,14vw,168px) 0}
 [data-scrub].hl-split .hl .word::before{content:"";position:absolute;z-index:-1;left:-.05em;right:-.26em;top:.1em;bottom:.02em;border-radius:.14em;background:rgba(107,143,202,.34);transform:scaleX(var(--hl,0));transform-origin:0 50%}
 [data-scrub].hl-split .hl .word:last-child::before{right:-.05em}
 .sec-head.how-head{max-width:none}
-.how-head .sub{display:block;margin-top:16px;font-size:clamp(19px,2.1vw,26px);line-height:1.32;letter-spacing:-.015em;color:var(--slate);max-width:660px;text-wrap:pretty}
+.how-head .sub{margin:16px 0 0;font:800 clamp(19px,2.1vw,26px)/1.32 var(--display);letter-spacing:-.015em;color:var(--slate);max-width:660px;text-wrap:pretty}
 .steps{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .step{position:relative;min-width:0}
-.step>.core{height:100%;padding:18px;display:grid;grid-template-columns:34px minmax(0,1fr);grid-template-rows:auto auto 1fr auto;column-gap:13px}
+.step>.core{height:100%;padding:18px;display:grid;grid-template-columns:34px minmax(0,1fr);grid-template-rows:auto auto auto 1fr;column-gap:13px}
 .step .num{grid-row:1;width:34px;height:34px;border-radius:50%;background:var(--charcoal);color:#fff;display:grid;place-items:center;font:800 12px/1 var(--display);letter-spacing:.04em}
-.step .num svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.step.loop>.core{background:var(--blue-tint)}
-.step.loop .num{background:var(--blue-deep)}
 .step h3{grid-column:2;align-self:center;font-size:19px;line-height:1.22}
 .step>.core>p{grid-column:2;margin:4px 0 0;color:var(--slate);font-size:15px;line-height:1.42}
-.step>.core>p.aside{grid-column:1/-1;margin:8px 0 0;font-size:12.5px;line-height:1.4;color:var(--muted)}
-.mv{grid-column:1/-1;align-self:end;margin-top:14px;background:var(--off);border-radius:16px;padding:11px;box-shadow:inset 0 0 0 1px var(--ring)}
+.step>.core>p.est{grid-column:1/-1;margin:12px 0 0;font-size:13px;line-height:1.45}
+.est b{color:var(--charcoal);font-family:var(--display);font-weight:800}
+.mv{grid-column:1/-1;align-self:start;margin-top:14px;background:var(--off);border-radius:16px;padding:11px;box-shadow:inset 0 0 0 1px var(--ring)}
+.mv+.mv{margin-top:8px}
 .mv .small-label{display:block;margin-bottom:8px;font-size:10px}
+.small-label{font:800 11px/1 var(--display);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
 .vis-chips{display:flex;flex-wrap:wrap;gap:6px}
 .vis-chips span{font:800 11.5px/1 var(--display);padding:7px 9px;border-radius:999px;background:#fff;color:var(--slate);box-shadow:0 0 0 1px var(--ring);transition:background-color .3s var(--ease),color .3s var(--ease)}
 .vis-chips span.on{background:var(--blue-deep);color:#fff;box-shadow:none}
@@ -209,60 +196,28 @@ section{padding:clamp(96px,14vw,168px) 0}
 @keyframes bar{from{transform:scaleY(.45)}to{transform:scaleY(.85)}}
 .rec-time{font:800 17px/1 var(--display);font-variant-numeric:tabular-nums}
 .rec-hint{font:700 12px/1.3 var(--display);color:var(--blue-deep);margin-top:4px}
-.mv.pillv{background:none;box-shadow:none;padding:0}
-.sitpill{display:inline-flex;align-items:center;gap:9px;max-width:100%;background:#fff;border-radius:999px;padding:8px 13px 8px 10px;box-shadow:0 0 0 1px var(--ring)}
-.sitpill i{flex:none;width:8px;height:8px;border-radius:50%;background:var(--blue)}
-.sit-window{position:relative;display:block;overflow:hidden;height:1.25em;font:800 13px/1.25 var(--display);white-space:nowrap}
-.sit-text{display:block}
-.edit-text{margin:0;min-height:2.9em;font:600 13px/1.45 "Plus Jakarta Sans",system-ui,sans-serif;color:var(--charcoal)}
-.caret{display:inline-block;width:2px;height:1.05em;margin-left:2px;vertical-align:-.15em;background:var(--blue-deep);animation:blink 1.1s steps(2,start) infinite}
-@keyframes blink{to{visibility:hidden}}
-.fm-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.fm-row .small-label{margin:0}
-.fm-verdict{font:800 17px/1 var(--display);letter-spacing:-.02em;color:var(--amber-deep)}
-.fm-obs{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-.fm-obs span{display:inline-flex;align-items:center;gap:6px;font:700 11px/1 var(--display);color:var(--slate);background:#fff;border-radius:999px;padding:6px 9px 6px 7px;box-shadow:0 0 0 1px var(--ring)}
-.fm-obs span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
-.fm-next{margin-top:8px;background:var(--charcoal);color:#fff;border-radius:12px;padding:9px 11px}
-.fm-next .dotlbl{color:#C3CBD5}
-.fm-next p{margin:5px 0 0;font:700 13.5px/1.35 var(--display);letter-spacing:-.01em}
+.said{margin:0 0 10px;font:700 13px/1.45 var(--display);letter-spacing:-.01em;color:var(--charcoal)}
 .loopv{display:flex;align-items:stretch;gap:4px}
 .att{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#fff;border-radius:11px;padding:8px 9px;box-shadow:0 0 0 1px var(--ring)}
 .att .small-label{margin:0;font-size:9.5px;letter-spacing:.12em}
 .att b{font:800 15px/1 var(--display);letter-spacing:-.02em}
 .att .mixed{color:var(--amber-deep)}
 .att .strong2{color:var(--green)}
-.att.nmnode{background:var(--charcoal);box-shadow:none}
-.att.nmnode .dotlbl{color:#DCE5F4;font-size:9.5px;line-height:1.25;align-items:flex-start}
-.att.nmnode .dotlbl::before{display:none}
 .att-arrow{flex:none;display:grid;place-items:center;width:14px;color:var(--blue-deep)}
 .att-arrow svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.step:not(:last-child)::after{content:"";position:absolute;background:rgba(47,55,64,.18);border-radius:2px}
-@media (min-width:1024px){.how{padding:96px 0}.step:not(:last-child)::after{top:40px;right:-16px;width:16px;height:2px}.step:nth-child(3n)::after{display:none}}
-@media (max-width:1023px){.how{padding:64px 0}.how-head .sub{font-size:17.5px}.steps{grid-template-columns:1fr;gap:9px;margin-top:24px}.step>.core{padding:12px 13px;grid-template-columns:30px minmax(0,1fr);column-gap:11px}.step .num{width:30px;height:30px;font-size:11px}.step .num svg{width:15px;height:15px}.step h3{font-size:18px}.step>.core>p{font-size:14.5px;line-height:1.4}.mv{margin-top:10px;padding:10px}.step:not(:last-child)::after{left:34px;bottom:-10px;width:2px;height:10px}}
-@media (min-width:1024px){.product{padding:88px 0}}
-.fb3{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:860px){.fb3{grid-template-columns:1fr;gap:10px;margin-top:28px}}
-.fb3>li{display:flex}
-.fb3 .core{flex:1;padding:20px 20px 18px}
-.fb3 p{margin:9px 0 0;font:700 16px/1.4 var(--display);letter-spacing:-.01em}
-.fb3 .q{margin-top:10px;background:var(--off);border-radius:12px;padding:8px 11px;font:italic 500 14px/1.45 "Plus Jakarta Sans",system-ui,sans-serif;letter-spacing:0}
-.fb3 .next .core{background:var(--charcoal);color:#fff;box-shadow:var(--soft-shadow)}
-.fb3 .next .dotlbl{color:#C3CBD5}
-.fb3 .next p{font-size:17px}
-.fb3 .next p.cue{font:600 14px/1.45 "Plus Jakarta Sans",system-ui,sans-serif;color:#C3CBD5;letter-spacing:0}
-.small-label{font:800 11px/1 var(--display);letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.att-quote{margin:9px 0 0;font:600 13px/1.45 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;color:var(--ink-soft)}
 .words{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}
-.words .small-label{margin-right:4px}
-.wchip{display:inline-block;background:var(--tan);color:#7A5F33;border-radius:999px;padding:7px 11px;font:800 13px/1 var(--display)}
-.fb-foot{margin:22px 0 0;max-width:720px;color:var(--slate);font-size:15px;line-height:1.5}
-.fb-foot b{color:var(--charcoal);font-family:var(--display);font-weight:800}
-@media (max-width:1023px){.product{padding:64px 0}.fb3 .core{padding:16px 16px 15px}.fb3 p{font-size:15px}.fb3 .next p{font-size:16px}.wchip{font-size:12px;padding:6px 9px}}
+.mv .words .small-label{display:inline;margin:0 4px 0 0}
+.wchip{display:inline-block;background:var(--tan);color:#7A5F33;border-radius:999px;padding:6px 9px;font:800 12px/1 var(--display)}
+.how-proof{margin:22px 0 0;font:700 15px/1.5 var(--display);color:var(--slate)}
+.step:not(:last-child)::after{content:"";position:absolute;background:rgba(47,55,64,.18);border-radius:2px}
+@media (min-width:1024px){.how{padding:96px 0}.step:not(:last-child)::after{top:40px;right:-16px;width:16px;height:2px}}
+@media (max-width:1023px){.how{padding:64px 0}.how-head .sub{font-size:17.5px}.steps{grid-template-columns:1fr;gap:9px;margin-top:24px}.step>.core{padding:12px 13px;grid-template-columns:30px minmax(0,1fr);column-gap:11px}.step .num{width:30px;height:30px;font-size:11px}.step h3{font-size:18px}.step>.core>p{font-size:14.5px;line-height:1.4}.mv{margin-top:10px;padding:10px}.step:not(:last-child)::after{left:34px;bottom:-10px;width:2px;height:10px}.how-proof{margin-top:18px;font-size:14.5px}}
+.todo{background:#FFF1BF;color:#5E4600;border-radius:6px;padding:1px 6px;box-shadow:0 0 0 1.5px #D9A900;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .situations .lede .count{color:var(--charcoal);font-weight:800}
 .odo{display:inline-flex;align-items:flex-start;height:1em;line-height:1;overflow:hidden;vertical-align:-.12em}
 .odo-col{display:flex;flex-direction:column}
 .odo-col span{display:block;height:1em}
-.situations .marquee{margin-top:44px}
 .tabs{margin-top:40px}
 .tablist{position:relative;isolation:isolate;display:flex;flex-wrap:wrap;gap:8px}
 @media (max-width:760px){.tablist{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -18px;padding:4px 18px 12px;scroll-padding:0 18px}.tablist::-webkit-scrollbar{display:none}}
@@ -275,6 +230,7 @@ section{padding:clamp(96px,14vw,168px) 0}
 .tab-ind{position:absolute;left:0;top:0;z-index:0;border-radius:999px;background:var(--charcoal);pointer-events:none}
 .tabpanel{margin-top:22px;outline-offset:6px}
 .tabpanel+.tabpanel{margin-top:30px}
+html.js .tabpanel[data-idle]{display:none}
 .js-tabs .tabpanel+.tabpanel{margin-top:22px}
 .tab-sub{margin:0 0 14px;color:var(--slate);font-size:16px}
 .sit-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
@@ -290,8 +246,8 @@ section{padding:clamp(96px,14vw,168px) 0}
 .privacy h2{color:#fff;margin-top:22px;font-size:clamp(32px,4.6vw,60px);line-height:1.06}
 .priv-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:56px;align-items:end}
 @media (max-width:979px){.priv-head{grid-template-columns:1fr;gap:36px}}
-.dots{display:grid;grid-template-columns:repeat(var(--cols,14),6px);gap:18px;padding:6px}
-@media (max-width:979px){.dots{gap:15px}}
+.dots{--rows:7;--gap:18px;display:grid;grid-template-columns:repeat(var(--cols,14),6px);grid-auto-rows:6px;gap:var(--gap);padding:6px;height:calc(var(--rows) * 6px + (var(--rows) - 1) * var(--gap) + 12px)}
+@media (max-width:979px){.dots{--rows:4;--gap:15px}}
 .dots i{width:6px;height:6px;border-radius:50%;background:#9FB4D8;opacity:.3}
 .pgrid{list-style:none;margin:48px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 @media (max-width:980px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -350,34 +306,26 @@ td{color:var(--slate)}
 footer.site{padding:36px 0 96px;color:var(--muted);font-size:14px}
 footer.site .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(47,55,64,.1);padding-top:28px}
 footer.site .wordmark{font-size:22px}
-.mswitch{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:19;display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 15px 0 9px;border:0;border-radius:999px;background:rgba(255,255,255,.8);backdrop-filter:saturate(1.6) blur(16px);-webkit-backdrop-filter:saturate(1.6) blur(16px);box-shadow:0 0 0 1px var(--ring),0 14px 30px -18px rgba(47,55,64,.4);font:800 12.5px/1 var(--display);letter-spacing:.01em;color:var(--charcoal);cursor:pointer;transition:scale .14s var(--ease),opacity .2s var(--ease)}
-.mswitch:active{scale:.96}
-.mswitch.yield:not(:focus-visible):not(:hover){opacity:0;visibility:hidden;transition:opacity .2s var(--ease),visibility 0s linear .2s}
-.mswitch .track{position:relative;flex:none;width:34px;height:20px;border-radius:999px;background:var(--blue-deep);transition:background-color .25s var(--ease)}
-.mswitch .knob{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(47,55,64,.3);transform:translateX(14px)}
-html[data-motion=off] .mswitch .track{background:#7F8A99}
-html[data-motion=off] .mswitch .knob{transform:none}
-@media (max-width:640px){.mswitch .t{display:none}.mswitch{padding:0 12px}}
+footer.site .pause{border:0;background:none;padding:0;font:inherit;color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 html.js:not(.ready) [data-intro]{visibility:hidden}
-html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
-html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active,html[data-motion=off] .tablist button:active,html[data-motion=off] .share button:active,html[data-motion=off] .mswitch:active{scale:none}
-@media (hover:hover) and (pointer:fine){html[data-motion=off] .btn:hover .ico{transform:none}}
+html.paused *,html.paused *::before,html.paused *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
+html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
+@media (hover:hover) and (pointer:fine){html.paused .btn:hover .ico{transform:none}}
 </style>
 </head>
-<body>
+<body class="landing">
 <a class="skip" href="#main">Skip to content</a>
 <div class="progress" aria-hidden="true"></div>
-<nav class="nav" aria-label="Main" data-intro><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a><div class="nav-links"><span class="nav-hl" aria-hidden="true"></span><a class="link" href="#how">How it works</a><a class="link" href="#situations">Situations</a><a class="link" href="#privacy">Privacy</a><a class="link" href="#faq">FAQ</a></div><a class="btn magnetic" href="#join">Join the waitlist<span class="ico"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></nav>
-<aside class="motion" aria-label="Motion settings"><button class="mswitch" type="button" role="switch" aria-checked="true" aria-label="Animations"><span class="track" aria-hidden="true"><span class="knob"></span></span><span class="t" aria-hidden="true">Animations</span></button></aside>
+<header class="masthead" data-intro><div class="wrap"><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a><span class="masthead-tag">You. Me. Understood.</span></div></header>
+<nav class="nav" aria-label="Main" data-intro><div class="nav-links"><span class="nav-hl" aria-hidden="true"></span><a class="link" href="#how">How it works</a><a class="link" href="#situations">Situations</a><a class="link" href="#privacy">Privacy</a><a class="link" href="#faq">FAQ</a></div><a class="btn magnetic" href="#join">Join the waitlist<span class="ico"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></nav>
 <main id="main">
 
 <section class="hero" aria-labelledby="hero-title">
 <div class="wrap hero-grid">
 <div class="hero-copy">
 <span class="pill" data-intro><i></i>Coming soon to iPhone</span>
-<h1 id="hero-title" data-split data-intro>Better conversations. <span class="accent">A <span class="mark">brighter</span> you.</span></h1>
-<p class="lede" data-intro>Practice real conversations out loud. Build confidence for the moments that matter.</p>
-<div class="rotator" data-intro><span class="rot-dot" aria-hidden="true"></span><span class="rot-window" aria-hidden="true"><span class="rot-text">Practice a college interview.</span></span><span class="sr-only">For example: practice a college interview, handle an awkward silence, ask your teacher for an extension.</span></div>
+<h1 id="hero-title" data-split data-intro><span class="hero-penguin" aria-hidden="true"><svg class="hero-penguin-art" viewBox="0 0 200 240" aria-hidden="true"><g transform="rotate(6 100 135)"><ellipse cx="64" cy="212" rx="15" ry="7" fill="#C98A4B" transform="rotate(-14 64 212)"/><ellipse cx="128" cy="222" rx="15" ry="7" fill="#C98A4B" transform="rotate(10 128 222)"/><ellipse cx="34" cy="118" rx="16" ry="36" fill="#2F3740" transform="rotate(-45 34 118)"/><ellipse cx="166" cy="150" rx="16" ry="36" fill="#2F3740" transform="rotate(45 166 150)"/><ellipse cx="100" cy="135" rx="60" ry="80" fill="#2F3740"/><ellipse cx="100" cy="148" rx="38" ry="58" fill="#F8F7F4"/><circle cx="100" cy="42" r="7" fill="#6B8FCA"/><circle cx="68" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><circle cx="132" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><path d="M74 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><path d="M110 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><polygon points="90,108 110,108 100,124" fill="#C98A4B"/></g></svg></span>Say it out loud. <span class="accent">See how you <span class="mark">came across.</span></span></h1>
+<p class="lede" data-intro>UIMI is a private practice room for students. Pick a real moment, say your response, and get one thing to work on next. Audio only. Nothing shared.</p>
 <form class="join" id="join-hero" data-source="hero" novalidate data-intro>
 <div class="bezel form-bezel"><div class="core field">
 <label class="hp" for="company-hero">Leave this empty</label><input class="hp" id="company-hero" name="company" tabindex="-1" autocomplete="off">
@@ -401,41 +349,18 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 </div></div></div>
 </div>
 <div class="stage" data-intro>
-<div class="phone-wrap" role="img" aria-label="A preview of the UIMI app: pick a real moment, say your answer out loud, and see how you likely landed, with what worked and one next move.">
+<div class="phone-wrap" role="img" aria-label="A preview of UIMI's feedback on a college interview answer: aimed for Confident, came across Mixed, with what worked and the next move.">
 <div class="phone" aria-hidden="true"><div class="screen">
-<div class="scr s-pick">
-<div class="top"><span>When it stalls</span><span>New</span></div>
-<div class="lbl">The moment</div>
-<div class="sit"><b>Recover from an awkward silence</b><p>Them: “Yeah. So. These chips are, uh… yep. They’re chips.”</p></div>
-<div class="lbl">Land as</div>
-<div class="pchips"><span>Personable</span><span>Funny</span><span>Connected</span></div>
-<div class="go">Start practicing</div>
-</div>
-<div class="scr s-rec">
-<div class="top"><span>Awkward silence</span><span>Attempt 1</span></div>
-<div class="lbl">Say it out loud</div>
-<p class="cap"><span>Ha,</span> <span>yeah.</span> <span>Um,</span> <span>so,</span> <span>uh,</span> <span>what</span> <span>classes</span> <span>are</span> <span>you</span> <span>taking</span> <span>this</span> <span>year?</span></p>
-<div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-<div class="rrow"><div class="rdot"><b></b></div><div><div class="timer">0:14</div><small>Listening. Tap to finish</small></div></div>
-</div>
-<div class="scr s-fb">
-<div class="top"><span>Awkward silence</span><span>1 of 3</span></div>
-<div class="lbl">You wanted to land as</div>
-<div class="want">Personable</div>
-<div class="lbl">How you likely landed</div>
-<div class="verdict">Mixed</div>
+<p class="fb-head">College interview · Attempt 1</p>
+<p class="fb-result">Aimed for <b class="aim">Confident</b>. Came&nbsp;across&nbsp;<b class="got">Mixed</b>.</p>
 <div class="meter"><i><b></b></i><i><b></b></i><i></i></div>
-<div class="mlabels"><span>Needs work</span><span>Mixed</span><span>Strong</span></div>
-<p class="line">Friendly, but the jump to classes felt like an interview question.</p>
-<div class="mini"><span class="dotlbl" style="--c:#35674F">What worked</span><p>You laughed along instead of letting the silence drag.</p><div class="q">Ha, yeah.</div></div>
-<div class="mini blue"><span class="dotlbl">Your next move</span><p>Stay with the chips joke, then ask who dragged them here.</p></div>
-</div>
+<div class="mlabels"><span>Needs work</span><span class="on">Mixed</span><span>Strong</span></div>
+<p class="line">Honest, but “I guess” and “yeah” made you sound unsure of the good stuff.</p>
+<div class="mini"><span class="mlbl" style="--c:#35674F">What worked</span><p>You gave real specifics. “I run cross country.”</p></div>
+<div class="mini blue"><span class="mlbl">Your next move</span><p>Lead with cross country. One sentence on what it taught you, then stop.</p></div>
 </div></div>
 </div>
-<span class="sat s1" data-depth="1.6" aria-hidden="true"><i></i>Personable</span>
-<span class="sat s2" data-depth="-1.2" aria-hidden="true"><i style="--c:#C98A4B"></i>Funny</span>
-<span class="sat s3" data-depth="1.1" aria-hidden="true"><i style="--c:#35674F"></i>Attempt 2 · Strong</span>
-<span class="sat s4" data-depth="-1.8" aria-hidden="true">Your next move</span>
+<span class="next-chip" aria-hidden="true">Attempt 2 · Strong</span>
 </div>
 </div>
 </section>
@@ -443,52 +368,26 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <section id="how" class="how" aria-labelledby="how-title">
 <div class="wrap">
 <div class="sec-head how-head" data-reveal>
-<span class="pill"><i></i>How UIMI works</span>
-<h2 id="how-title">Say it. See how you landed. <span class="sub">UIMI looks at your full response, then shows you the one&nbsp;thing worth working on&nbsp;next.</span></h2>
+<span class="pill"><i></i>Three steps</span>
+<h2 id="how-title">How UIMI works.</h2>
+<p class="sub">Say it. See how you came across. UIMI looks at your full response, then shows you the one&nbsp;thing worth working on&nbsp;next.</p>
 </div>
 <ol class="steps">
 <li class="step bezel" data-step><div class="core">
-<span class="num" aria-hidden="true">01</span><h3>Pick the moment</h3><p>Choose a real conversation or speaking situation.</p>
-<div class="mv pillv" aria-hidden="true"><span class="sitpill"><i></i><span class="sit-window"><span class="sit-text">College interview</span></span></span></div>
+<span class="num" aria-hidden="true">01</span><h3>Pick the moment</h3><p>Choose a real conversation, then edit the details so it matches what's actually happening, and pick how you want to come across.</p>
+<div class="mv" aria-hidden="true"><span class="small-label">The moment</span><div class="sit"><b>College interview</b><p>Interviewer: “So, tell me a little about yourself.”</p></div></div>
+<div class="mv" aria-hidden="true"><span class="small-label">Land as</span><div class="vis-chips"><span class="on">Confident</span><span>Authentic</span><span>Connected</span><span>Personable</span></div></div>
 </div></li>
 <li class="step bezel" data-step><div class="core">
-<span class="num" aria-hidden="true">02</span><h3>Make it yours</h3><p>Personalize the situation so it matches what is actually happening.</p>
-<div class="mv" aria-hidden="true"><span class="small-label">Personalize your situation</span><p class="edit-text"><span class="typed">At the club mixer we covered names and grades, then it went quiet by the snacks…</span><span class="caret"></span></p></div>
+<span class="num" aria-hidden="true">02</span><h3>Say it out loud</h3><p>Practice privately using your voice. Not sure what to say? UIMI can give you a starting response.</p>
+<div class="mv" aria-hidden="true"><p class="said">“Um, so I’m a senior, and I, uh, I like science I guess, and I run cross country, and... yeah.”</p><div class="rec"><div class="rec-btn"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div><div><div class="rec-time">0:11</div><div class="rec-hint">Listening. Tap to finish</div></div></div></div>
 </div></li>
 <li class="step bezel" data-step><div class="core">
-<span class="num" aria-hidden="true">03</span><h3>Choose how you want to come across</h3><p>Choose the impression you want to make.</p>
-<div class="mv" aria-hidden="true"><span class="small-label">Land as</span><div class="vis-chips"><span>Confident</span><span>Trustworthy</span><span class="on">Personable</span><span>Authentic</span><span>Persuasive</span></div></div>
-</div></li>
-<li class="step bezel" data-step><div class="core">
-<span class="num" aria-hidden="true">04</span><h3>Say it out loud</h3><p>Practice privately using your voice.</p>
-<div class="mv" aria-hidden="true"><div class="rec"><div class="rec-btn"><div class="bars"><i></i><i></i><i></i><i></i><i></i></div></div><div><div class="rec-time">0:14</div><div class="rec-hint">Listening</div></div></div></div>
-<p class="aside">Not sure what to say? UIMI can give you a starting response to practice.</p>
-</div></li>
-<li class="step bezel" data-step><div class="core">
-<span class="num" aria-hidden="true">05</span><h3>See how you landed</h3><p>See what worked, what got in the way, and the one thing worth working on next.</p>
-<div class="mv fbmini" aria-hidden="true"><div class="fm-row"><span class="small-label">How you likely landed</span><b class="fm-verdict">Mixed</b></div><div class="fm-obs"><span style="--c:#35674F">What worked</span><span style="--c:#C98A4B">What got in the way</span></div><div class="fm-next"><span class="dotlbl">Your next move</span><p>Stay with the chips joke, then ask who dragged them here.</p></div></div>
-</div></li>
-<li class="step bezel loop" data-step><div class="core">
-<span class="num" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.7"/><path d="M20 4v4.7h-4.7"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.3"/><path d="M4 20v-4.7h4.7"/></svg></span><h3>Try again</h3><p>Each attempt builds on the last.</p>
-<div class="mv loopv" aria-hidden="true"><div class="att"><span class="small-label">Attempt 1</span><b class="mixed">Mixed</b></div><span class="att-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><div class="att nmnode"><span class="dotlbl">Your next move</span></div><span class="att-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><div class="att"><span class="small-label">Attempt 2</span><b class="strong2">Strong</b></div></div>
+<span class="num" aria-hidden="true">03</span><h3>See how you came across</h3><p>What worked, what got in the way, and the one thing worth working on next. Then try again. Each attempt builds on the last.</p>
+<div class="mv" aria-hidden="true"><div class="loopv"><div class="att"><span class="small-label">Attempt 1</span><b class="mixed">Mixed</b></div><span class="att-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span><div class="att"><span class="small-label">Attempt 2</span><b class="strong2">Strong</b></div></div><p class="att-quote">“You opened with cross country and stopped before the ‘yeah.’”</p><div class="words"><span class="small-label">Words to reconsider</span><span class="wchip">“um”</span><span class="wchip">“uh”</span></div></div>
+<p class="est"><b>An estimate, not a verdict.</b> Feedback is based on what you actually said. It never claims to know what anyone felt, and it never labels who you are.</p>
 </div></li>
 </ol>
-</div>
-</section>
-
-<section id="feedback" class="product" aria-labelledby="product-title">
-<div class="wrap">
-<div class="sec-head" data-reveal>
-<span class="pill"><i></i>The feedback</span>
-<h2 id="product-title">See how you likely came across.</h2>
-<p class="lede">UIMI looks at your full response and may notice several useful things. It puts the one most worth working on next first, and then you try again.</p>
-</div>
-<ul class="fb3">
-<li class="bezel" data-reveal><div class="core"><span class="dotlbl" style="--c:#35674F">What worked</span><p>You jumped in instead of letting the silence drag, and the laugh kept it light.</p><p class="q">“Ha, yeah.”</p></div></li>
-<li class="bezel" data-reveal><div class="core"><span class="dotlbl" style="--c:#C98A4B">What got in the way</span><p>Switching to classes felt like an interview question, not a conversation.</p><div class="words"><span class="small-label">Words to reconsider</span><span class="wchip">“um”</span><span class="wchip">“uh”</span></div></div></li>
-<li class="bezel next" data-reveal><div class="core"><span class="dotlbl">Your next move</span><p>Stay with the chips joke, then ask who dragged them here.</p><p class="cue">Try this: keep it light and easy to answer, then practice it again.</p></div></li>
-</ul>
-<p class="fb-foot" data-reveal><b>An estimate, not a verdict.</b> Feedback is based on what you actually said. It never claims to know what anyone felt, and it never labels who you are.</p>
 </div>
 </section>
 
@@ -499,18 +398,12 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <h2 id="sit-title">From the interview to the awkward silence.</h2>
 <p class="lede">Pick one of <b class="count" data-count="43">43</b> real situations, or bring your own.</p>
 </div>
-</div>
-<div class="marquee" aria-hidden="true">
-<div class="marquee-mask"><div class="mrow" data-dir="1"><span>College interview</span><span class="b">Answer a question in class</span><span>Introduce yourself</span><span>Your mind goes blank</span><span>Say no</span><span class="b">Pitch an idea</span><span>Open strongly</span><span>Ask for support</span><span>Internship interview</span><span class="b">Job interview</span><span>Ask a teacher for help</span><span>Ask for an extension</span><span>College interview</span><span class="b">Answer a question in class</span><span>Introduce yourself</span><span>Your mind goes blank</span><span>Say no</span><span class="b">Pitch an idea</span><span>Open strongly</span><span>Ask for support</span><span>Internship interview</span><span class="b">Job interview</span><span>Ask a teacher for help</span><span>Ask for an extension</span></div></div>
-<div class="marquee-mask"><div class="mrow" data-dir="-1"><span>Explain your reasoning</span><span>Disagree respectfully with a teacher</span><span class="b">Start an icebreaker</span><span>Join an existing conversation</span><span>Enter a group conversation</span><span>Keep a conversation going</span><span>Exit naturally</span><span class="b">Approach a guest speaker</span><span>Be there for a friend</span><span>Reconnect with someone</span><span>Recover from an awkward silence</span><span>Move to a new topic naturally</span><span class="b">Explain your reasoning</span><span>Disagree respectfully with a teacher</span><span>Start an icebreaker</span><span>Join an existing conversation</span><span>Enter a group conversation</span><span class="b">Keep a conversation going</span><span>Exit naturally</span><span>Approach a guest speaker</span><span>Be there for a friend</span><span>Reconnect with someone</span><span class="b">Recover from an awkward silence</span><span>Move to a new topic naturally</span></div></div>
-</div>
-<div class="wrap">
 <div class="tabs" data-reveal>
 <div class="tablist" role="tablist" aria-label="Practice areas"><button type="button" role="tab" id="tab-interviews" aria-controls="panel-interviews" aria-selected="true" tabindex="0">Interviews</button><button type="button" role="tab" id="tab-class-and-teacher" aria-controls="panel-class-and-teacher" aria-selected="false" tabindex="-1">Class and teachers</button><button type="button" role="tab" id="tab-everyday-conversations" aria-controls="panel-everyday-conversations" aria-selected="false" tabindex="-1">Everyday Conversations</button><button type="button" role="tab" id="tab-when-it-stalls" aria-controls="panel-when-it-stalls" aria-selected="false" tabindex="-1">When it stalls</button><button type="button" role="tab" id="tab-difficult-conversations" aria-controls="panel-difficult-conversations" aria-selected="false" tabindex="-1">Hard conversations</button><button type="button" role="tab" id="tab-leadership-and-persuasion" aria-controls="panel-leadership-and-persuasion" aria-selected="false" tabindex="-1">Leading and persuading</button><button type="button" role="tab" id="tab-presentations" aria-controls="panel-presentations" aria-selected="false" tabindex="-1">Presentations</button><button type="button" role="tab" id="tab-self-advocacy" aria-controls="panel-self-advocacy" aria-selected="false" tabindex="-1">Speaking up for yourself</button><button type="button" role="tab" id="tab-own-material" aria-controls="panel-own-material" aria-selected="false" tabindex="-1">Your own material</button></div>
 <div class="tabpanel" role="tabpanel" id="panel-interviews" aria-labelledby="tab-interviews" tabindex="0"><p class="tab-sub">College · job · internship</p><ul class="sit-chips"><li data-peek="An alumni interviewer for a school you actually want to attend.">College interview</li><li data-peek="A summer internship at a small company, the kind where you would actually do real work. You are a little underqualified and you both know it.">Internship interview</li><li data-peek="A part-time job you need, at a place you would be glad to work. The manager is squeezing you in between shifts and has three other people to see today.">Job interview</li></ul></div>
 <div class="tabpanel" role="tabpanel" id="panel-class-and-teacher" aria-labelledby="tab-class-and-teacher" tabindex="0" data-idle><p class="tab-sub">Speak up · ask · disagree</p><ul class="sit-chips"><li data-peek="History class, third period. You did the reading but only half of it stuck. The teacher has been going around the room and you have been hoping to be skipped.">Answer a question in class</li><li data-peek="After class. You have been lost in this unit for a week and have not said anything, partly because everyone else seems to get it. The next quiz is Friday.">Ask a teacher for help</li><li data-peek="The essay is due tomorrow at midnight. You have a real reason: a family situation ate most of your week, and you have two other things due the same day.">Ask for an extension</li><li data-peek="Math. You got a different answer from the one on the board, and you think yours might actually be right, or at least you are not sure where you went wrong.">Explain your reasoning</li><li data-peek="You got a B-minus on a project you worked hard on, and you think the grade missed something specific: the analysis section the comments call thin actually runs three pages, with sources.">Disagree respectfully with a teacher</li></ul></div>
 <div class="tabpanel" role="tabpanel" id="panel-everyday-conversations" aria-labelledby="tab-everyday-conversations" tabindex="0" data-idle><p class="tab-sub">Intros · groups · friends</p><ul class="sit-chips"><li data-peek="First meeting of a club you joined because a friend said it was good, except the friend is not here. Twenty people, most of whom already know each other.">Introduce yourself</li><li data-peek="Assembly is running fifteen minutes late and the whole grade is stuck in the bleachers.">Start an icebreaker</li><li data-peek="Lunch. Two people you sort of know from a class are at a table, deep in an argument about a show you have actually seen. You walk up with your tray.">Join an existing conversation</li><li data-peek="A party in someone's basement. A group of five is standing in a loose circle, already laughing about something that happened last weekend. You know one of them a little.">Enter a group conversation</li><li data-peek="You have been talking to someone new for about two minutes, at a friend's thing, and it is going okay. You asked what they do outside school.">Keep a conversation going</li><li data-peek="A genuinely good conversation at a school event. You have been talking for ten minutes about why they switched from soccer to track.">Exit naturally</li><li data-peek="A guest speaker just finished a talk at your school about a job you might actually want someday. Most people are filing out. A few students are waiting to say something.">Approach a guest speaker</li><li data-peek="Your friend spent the whole week at extra practices trying to make the team. The list went up this afternoon.">Be there for a friend</li><li data-peek="You were close with someone in middle school and drifted apart when you ended up in different classes.">Reconnect with someone</li></ul></div>
-<div class="tabpanel" role="tabpanel" id="panel-when-it-stalls" aria-labelledby="tab-when-it-stalls" tabindex="0" data-idle><p class="tab-sub">Blanks · silences · rejoining</p><ul class="sit-chips"><li data-peek="You are talking with someone from your grade at a friend's house. It was going fine: they were telling you about a summer job at a camp.">Your mind goes blank</li><li data-peek="You and someone you just met are standing by the snacks at a club mixer. You have covered names, grade, and that you both got dragged here by a friend. Then it dies.">Recover from an awkward silence</li><li data-peek="You have been talking to a classmate about a test for a while and it has run out of steam. You actually want to ask them about the concert they mentioned last week.">Move to a new topic naturally</li><li data-peek="Lunch table, five people. You have not said anything in about ten minutes; the conversation moved fast and you missed the window twice.">Re-enter a group after being quiet</li><li data-peek="You are joking around with a friend about a movie when their tone changes. Mid-laugh, they say something real about their parents fighting.">The conversation shifts unexpectedly</li></ul></div>
+<div class="tabpanel" role="tabpanel" id="panel-when-it-stalls" aria-labelledby="tab-when-it-stalls" tabindex="0" data-idle><p class="tab-sub">Blanks · silences · rejoining</p><ul class="sit-chips"><li data-peek="You are talking with someone from your grade at a friend's house. It was going fine: they were telling you about a summer job at a camp.">Your mind goes blank</li><li data-peek="You and a close friend are walking to class, same as every morning. You ask what she did last night, and instead of answering she goes quiet and looks down at her phone.">Recover from an awkward silence</li><li data-peek="You have been talking to a classmate about a test for a while and it has run out of steam. You actually want to ask them about the concert they mentioned last week.">Move to a new topic naturally</li><li data-peek="Lunch table, five people. You have not said anything in about ten minutes; the conversation moved fast and you missed the window twice.">Re-enter a group after being quiet</li><li data-peek="You are joking around with a friend about a movie when their tone changes. Mid-laugh, they say something real about their parents fighting.">The conversation shifts unexpectedly</li></ul></div>
 <div class="tabpanel" role="tabpanel" id="panel-difficult-conversations" aria-labelledby="tab-difficult-conversations" tabindex="0" data-idle><p class="tab-sub">No · boundaries · apology</p><ul class="sit-chips"><li data-peek="A close friend wants you to cover for them with their parents again. You have done it three times this semester and the last time their mom almost caught you in it.">Say no</li><li data-peek="Your friend keeps texting you at one in the morning, sometimes twenty messages in a row, and gets upset when you do not answer.">Set a boundary</li><li data-peek="Group project, four people, due in a week. One person decided the whole plan over the weekend without asking anyone, made the slides, and split up the sections.">Push back respectfully</li><li data-peek="At lunch yesterday you made a joke about a friend's family in front of four other people. Everyone laughed except them.">Apologize</li><li data-peek="You told a friend something private about your family two weeks ago. Yesterday, someone you barely know brought it up. There is only one way they could have heard it.">Tell someone something bothered you</li></ul></div>
 <div class="tabpanel" role="tabpanel" id="panel-leadership-and-persuasion" aria-labelledby="tab-leadership-and-persuasion" tabindex="0" data-idle><p class="tab-sub">Pitch · align · push back</p><ul class="sit-chips"><li data-peek="Student council, the last meeting before the schedule for next semester is set.">Pitch an idea</li><li data-peek="Your club needs to raise money for a spring trip. Last year's bake sale made about four hundred dollars.">Get a group behind an idea</li><li data-peek="You are the captain. A teammate has missed the last three practices without saying why, and the others are starting to grumble about doing extra reps to cover.">Address a teammate problem</li><li data-peek="You proposed a plan in a club meeting: a mentoring program pairing seniors with freshmen. You spent a week on it.">Respond to disagreement</li><li data-peek="Your club's event is in nine days. The room booking form needs the advisor's signature by Friday or the space goes to someone else and the event dies.">Make a clear request</li></ul></div>
 <div class="tabpanel" role="tabpanel" id="panel-presentations" aria-labelledby="tab-presentations" tabindex="0" data-idle><p class="tab-sub">Open · explain · close</p><ul class="sit-chips"><li data-peek="A ten-minute class presentation on a topic you chose yourself. It is right after lunch, the room is warm, and nobody is looking up yet.">Open strongly</li><li data-peek="The middle of your presentation. You have set up the background and now you are at the one idea people actually need to leave with.">Explain a key point</li><li data-peek="You have one chart in your presentation and it matters: it is the evidence for your whole argument.">Present data</li><li data-peek="You finished the presentation and it went well. The teacher opens it up for questions.">Handle a question</li><li data-peek="The last thirty seconds of your presentation. You have made the argument and shown the evidence. This is the part people will remember and repeat.">Close strongly</li><li data-peek="The whole thing, start to finish, the way you would actually give it. Notes are allowed.">Practice a full presentation</li></ul></div>
@@ -526,7 +419,7 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <div class="priv-head">
 <div class="sec-head">
 <span class="pill" data-reveal>Private practice</span>
-<h2 id="privacy-title" data-scrub>Practice out loud, without an audience. <span class="hl">What you say stays yours.</span></h2>
+<h2 id="privacy-title" data-scrub>Private from everyone. <span class="hl">Including the parent who pays.</span></h2>
 </div>
 <div class="dots" aria-hidden="true"></div>
 </div>
@@ -540,7 +433,7 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 </ul>
 <div class="parents" id="parents" data-reveal>
 <h3>For parents and guardians</h3>
-<p>UIMI gives your student a private place to rehearse the conversations that shape school, work and friendships. You can pay for Premium, but there's no parent dashboard, and it never gives you access to their recordings or transcripts. Students practice more openly when it's private, so that's how UIMI is built.</p>
+<p>You can pay for Premium, but there's no parent dashboard and no access to recordings or transcripts. Students practice more openly when it's private, so that's how UIMI is built.</p>
 </div>
 </div>
 </div>
@@ -549,17 +442,14 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <section id="faq" class="faq-sec" aria-labelledby="faq-title">
 <div class="wrap narrow">
 <div class="sec-head" data-reveal>
-<span class="pill"><i></i>Questions</span>
-<h2 id="faq-title">Good questions to ask.</h2>
+<span class="pill"><i></i>FAQ</span>
+<h2 id="faq-title">Questions.</h2>
 </div>
 <div class="faq">
-<details data-reveal><summary>What is UIMI?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>A private practice room for real conversations. Pick a situation, say your response out loud, and see how you likely came across, with one thing to improve before you try again.</p></div></details>
-<details data-reveal><summary>Who is UIMI for?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Students, from high school through college, who want to feel ready for the conversations that matter: interviews, class, presentations, and the everyday ones that feel awkward. UIMI is for ages 13 and up.</p></div></details>
-<details data-reveal><summary>Does UIMI record video?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>No. UIMI is audio only. No camera, no audience.</p></div></details>
-<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Yes. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. A parent who pays does not get access. You can delete any practice, or your whole account, right in the app.</p></div></details>
+<details data-reveal><summary>What is UIMI?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>A private practice room for real conversations. Pick a situation, say your response out loud, and see how you likely came across, with one thing to improve before you try again. An AI model transcribes what you said and reads your words and delivery against the situation and the impression you were going for. It's an estimate, not a verdict.</p></div></details>
+<details data-reveal><summary>Who is UIMI for?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Students, from high school through college, who want to feel ready for the conversations that matter: interviews, class, presentations, and the everyday ones that feel awkward. You can also paste your own speech or describe the conversation you're about to have. UIMI is for ages 13 and up.</p></div></details>
+<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Audio only. No camera, no audience. Yes. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. A parent who pays does not get access. You can delete any practice, or your whole account, right in the app.</p></div></details>
 <details data-reveal><summary>Is UIMI therapy?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>No. UIMI is a practice tool, like rehearsing with a coach. It isn't counselling or mental health care, and it isn't a crisis service. If someone is struggling or feels unsafe, in the US they can call or text 988 at any time.</p></div></details>
-<details data-reveal><summary>How does UIMI judge how I came across?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>An AI model transcribes what you said and reads your words and delivery against the situation and the impression you were going for. You get one likely reading, what worked, what got in the way, and one move to try next. It's an estimate, not a verdict.</p></div></details>
-<details data-reveal><summary>Can I practice my own situation?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Yes. Paste a speech or an answer you're working on, or describe the conversation you're about to have, and practice saying it. You can also edit any situation's details to match your real one.</p></div></details>
 <details data-reveal><summary>When is UIMI launching?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>UIMI is coming to iPhone first. Join the waitlist and we'll email you as soon as it's ready.</p></div></details>
 <details data-reveal><summary>Is UIMI free?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Your first three practice sessions are free. Premium, for unlimited practice, will be available at launch, with prices shown clearly before anyone pays.</p></div></details>
 </div>
@@ -568,9 +458,8 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 
 <section id="join" class="closing" aria-labelledby="join-title">
 <div class="wrap narrow">
-<svg class="penguin closing-penguin" viewBox="0 0 200 240" aria-hidden="true"><g transform="rotate(6 100 135)"><ellipse cx="64" cy="212" rx="15" ry="7" fill="#C98A4B" transform="rotate(-14 64 212)"/><ellipse cx="128" cy="222" rx="15" ry="7" fill="#C98A4B" transform="rotate(10 128 222)"/><ellipse cx="34" cy="118" rx="16" ry="36" fill="#2F3740" transform="rotate(-45 34 118)"/><ellipse cx="166" cy="150" rx="16" ry="36" fill="#2F3740" transform="rotate(45 166 150)"/><ellipse cx="100" cy="135" rx="60" ry="80" fill="#2F3740"/><ellipse cx="100" cy="148" rx="38" ry="58" fill="#F8F7F4"/><circle cx="100" cy="42" r="7" fill="#6B8FCA"/><circle cx="68" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><circle cx="132" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><path d="M74 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><path d="M110 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><polygon points="90,108 110,108 100,124" fill="#C98A4B"/></g></svg>
 <h2 id="join-title" data-chars>Be first in line.</h2>
-<p class="lede" style="margin-left:auto;margin-right:auto" data-reveal>Better conversations start with practice. Join the waitlist and we'll email you when UIMI opens.</p>
+<p class="lede" style="margin-left:auto;margin-right:auto" data-reveal>Practice before it counts. Join the waitlist and we'll email you when UIMI opens.</p>
 <form class="join" id="join-footer" data-source="footer" novalidate>
 <div class="bezel form-bezel"><div class="core field">
 <label class="hp" for="company-footer">Leave this empty</label><input class="hp" id="company-footer" name="company" tabindex="-1" autocomplete="off">
@@ -596,7 +485,7 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 </section>
 
 </main>
-<footer class="site"><div class="signoff"><div class="bigmark" aria-hidden="true"><span class="wordmark"><span class="ch">u</span><span class="ch i">ı<span class="dot"><b></b></span></span><span class="ch">m</span><span class="ch i">ı<span class="dot"><b></b></span></span></span></div><p class="brand-line">You. Me. Understood.</p></div><div class="wrap"><span><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a></span><span>UIMI · New York · <a href="mailto:support@uimi.app">support@uimi.app</a> · <a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram @uimi.app</a></span><span><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a></span></div></footer>
+<footer class="site"><div class="signoff"><div class="bigmark" aria-hidden="true"><span class="wordmark"><span class="ch">u</span><span class="ch i">ı<span class="dot"><b></b></span></span><span class="ch">m</span><span class="ch i">ı<span class="dot"><b></b></span></span></span></div><p class="brand-line">You. Me. Understood.</p></div><div class="wrap"><span><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a></span><span>UIMI · New York · <a href="mailto:support@uimi.app">support@uimi.app</a> · <a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram @uimi.app</a></span><span><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a> · <button class="pause" type="button" data-pause>Pause animations</button></span></div></footer>
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vendor/SplitText.min.js" defer></script>
@@ -607,6 +496,6 @@ html[data-motion=off] .btn:active,html[data-motion=off] .ask-roles button:active
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/vendor/anime.min.js" defer></script>
 <script src="/vendor/motion.min.js" defer></script>
-<script src="/site.js?v=963a80adfc" defer></script>
+<script src="/site.js?v=a09df9e978" defer></script>
 </body>
 </html>

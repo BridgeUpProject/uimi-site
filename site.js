@@ -1,34 +1,30 @@
 // uimi.app runtime: the waitlist, the delivery demo, and all of the motion.
 //
 // Motion plays for every visitor, including people whose device asks for
-// reduced motion (the founder's call). The Animations switch in the corner
-// turns it all off, live; that choice is remembered on the device
-// (localStorage "uimi.motion" = "off") and never leaves it. The switch is
-// also the pause control WCAG 2.2.2 asks for, since the rotating lines, the
-// phone and the marquee move on their own.
+// reduced motion (the founder's call). "Pause animations" in the footer
+// stops it for the rest of the visit; nothing is saved.
 //
 // Libraries, all served from uimi.app: GSAP (ScrollTrigger, SplitText,
 // CustomEase, Flip, ScrambleText, Physics2D) runs the scroll choreography,
-// anime.js draws the underline and the privacy icons, drives the recording
-// waveform and ripples the dot grid, Motion gives the pointer-driven pieces
-// and the feedback cards their springs, and Lenis smooths the scroll.
+// anime.js draws the underline and the privacy icons and ripples the dot
+// grid, Motion gives the pointer-driven pieces their springs, and Lenis
+// smooths the scroll.
 // The waitlist and the demo work without any of them.
 (() => {
   "use strict";
-  const CONFIG = {"endpoint":"https://pnfkiiaagblozzxpvbua.supabase.co/functions/v1/join-waitlist","rotating":["Practice a college interview.","Handle an awkward silence.","Ask your teacher for an extension.","Join a group conversation.","Tell someone something bothered you.","Practice an upcoming speech.","Speak up when something feels unfair.","Ask for another opportunity.","Prepare for an internship interview.","Push back respectfully."]};
+  const CONFIG = {"endpoint":"https://pnfkiiaagblozzxpvbua.supabase.co/functions/v1/join-waitlist"};
   const root = document.documentElement;
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const KEY = "uimi.motion";
-  let mode = root.getAttribute("data-motion") === "off" ? "off" : "on";
   let ticket = null;
-  let teardown = null;
   let lenis = null;
+  let paused = false;
+  let stopMotion = null;
   const hooks = { side: null, hop: null };
 
   // Motion and Lenis would quietly switch themselves off for devices that
-  // ask for reduced motion; the switch above is how this site does that.
+  // ask for reduced motion; this site animates for everyone.
   if (window.Motion) {
     Motion.hasReducedMotionListener.current = true;
     Motion.prefersReducedMotion.current = false;
@@ -82,7 +78,7 @@
         const from = button.getBoundingClientRect();
         document.querySelectorAll("form.join").forEach((f) => { f.hidden = true; });
         document.querySelectorAll(".done").forEach((d) => d.classList.add("show"));
-        if (mode === "on" && window.gsap) {
+        if (window.gsap && !paused) {
           gsap.fromTo(done, { y: 24, opacity: 0, scale: 0.98 }, { y: 0, opacity: 1, scale: 1, duration: 0.9, ease: "expo.out", clearProps: "transform,opacity" });
           celebrate(from);
           if (hooks.hop) hooks.hop();
@@ -99,7 +95,7 @@
 
   const shareUrl = "https://uimi.app/?ref=share";
   document.querySelectorAll("[data-share]").forEach((b) => b.addEventListener("click", async () => {
-    const data = { title: "UIMI", text: "Practice the conversations nobody teaches you how to handle.", url: shareUrl };
+    const data = { title: "UIMI", text: "Say it out loud. See how you came across.", url: shareUrl };
     if (navigator.share) { try { await navigator.share(data); } catch {} return; }
     try { await navigator.clipboard.writeText(shareUrl); b.textContent = "Link copied"; } catch { b.textContent = "uimi.app"; }
   }));
@@ -165,6 +161,7 @@
   if (tabBox && tabs.length) {
     tabBox.classList.add("js-tabs");
     panels.forEach((p, i) => { p.removeAttribute("data-idle"); p.hidden = i !== 0; });
+    window.uimiRan = true;
     tabInd = Object.assign(document.createElement("span"), { className: "tab-ind" });
     tabInd.setAttribute("aria-hidden", "true");
     tabs[0].parentElement.prepend(tabInd);
@@ -180,7 +177,7 @@
       panels.forEach((p, k) => { p.hidden = k !== i; });
       if (focus) tabs[i].focus({ preventScroll: true });
       const list = tabs[i].parentElement;
-      if (list.scrollWidth > list.clientWidth + 1) list.scrollTo({ left: Math.max(0, tabs[i].offsetLeft - 18), behavior: mode === "on" ? "smooth" : "auto" });
+      if (list.scrollWidth > list.clientWidth + 1) list.scrollTo({ left: Math.max(0, tabs[i].offsetLeft - 18), behavior: paused ? "auto" : "smooth" });
       if (hooks.tab) hooks.tab(i);
       else {
         placeInd(false);
@@ -219,7 +216,7 @@
     resizeTimer = setTimeout(buildDots, 200);
   });
 
-  // ---------------------------------------------------------- pieces both modes share
+  // ---------------------------------------------------------- shared pieces
   function ensureSwoosh() {
     const mark = $(".hero .mark");
     if (!mark) return null;
@@ -237,82 +234,14 @@
     el.style.strokeLinecap = "";
   };
 
-  // ---------------------------------------------------------- the switch
-  const sw = $(".mswitch");
-  const knob = sw && $(".knob", sw);
-  const syncSwitch = () => sw?.setAttribute("aria-checked", String(mode === "on"));
-  sw?.addEventListener("click", () => {
-    const next = mode === "on" ? "off" : "on";
-    try {
-      if (next === "off") localStorage.setItem(KEY, "off");
-      else localStorage.removeItem(KEY);
-    } catch {}
-    if (window.Motion && knob) {
-      Motion.animate(knob, { transform: next === "on" ? ["translateX(0px)", "translateX(14px)"] : ["translateX(14px)", "translateX(0px)"] }, { type: "spring", stiffness: 700, damping: 36 })
-        .then(() => { knob.style.transform = ""; });
-    }
-    switchMode(next);
-  });
-
-  // The switch steps aside while a button or a field passes under it, so it
-  // never covers one. (Plain text links would make it blink on and off.)
-  if (sw) {
-    const clickable = "button, input, select, textarea, summary, [role=tab], .btn";
-    let queued = false;
-    const check = () => {
-      queued = false;
-      if (document.activeElement === sw) return sw.classList.remove("yield");
-      const r = sw.getBoundingClientRect();
-      const points = [[r.left + 4, r.top + 4], [r.right - 4, r.top + 4], [r.left + 4, r.bottom - 4], [r.right - 4, r.bottom - 4], [r.left + r.width / 2, r.top + r.height / 2]];
-      const covered = points.some(([x, y]) => document.elementsFromPoint(x, y).some((el) => !sw.contains(el) && el.closest(clickable)));
-      sw.classList.toggle("yield", covered);
-    };
-    const queue = () => {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(check);
-    };
-    window.addEventListener("scroll", queue, { passive: true });
-    window.addEventListener("resize", queue);
-    setTimeout(check, 400);
-  }
-
-  function switchMode(next) {
-    if (next === mode) return;
-    const place = holdPlace();
-    if (teardown) teardown();
-    teardown = null;
-    mode = next;
-    root.setAttribute("data-motion", next);
-    syncSwitch();
-    teardown = next === "on" && haveCore() ? startOn(scrollY < 80) : startOff();
-    place();
-  }
-
-  // Keep whatever the visitor is reading in the same spot while pins and
-  // spacers come and go.
-  function holdPlace() {
-    const hit = document.elementFromPoint(innerWidth / 2, innerHeight * 0.4);
-    const target = hit && hit.closest("section, footer, .signoff");
-    if (!target || scrollY < 80) return () => {};
-    const top = target.getBoundingClientRect().top;
-    return () => {
-      if (window.ScrollTrigger) ScrollTrigger.refresh();
-      const delta = target.getBoundingClientRect().top - top;
-      if (Math.abs(delta) < 2) return;
-      if (lenis) lenis.scrollTo(scrollY + delta, { immediate: true, force: true });
-      else window.scrollTo(0, scrollY + delta);
-    };
-  }
-
   const haveCore = () => !!(window.gsap && window.ScrollTrigger && window.Lenis);
 
+  // If the animation libraries fail to load, the page still shows everything.
   function startOff() {
     root.classList.add("ready");
     ensureSwoosh();
     buildDots();
     placeInd(false);
-    return () => {};
   }
 
   let registered = false;
@@ -390,14 +319,23 @@
       G.to(".progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
 
       // ------------------------------------------------ island nav
+      // It slips away while you read down the page and comes back when you
+      // scroll up. On the landing page below 1024px it also waits until the
+      // masthead, which carries the brand, has scrolled away.
+      root.classList.add("motion-on");
+      undo.push(() => root.classList.remove("motion-on"));
       const nav = $(".nav");
-      let navHidden = false;
-      const navTo = inCtx((hide) => G.to(nav, { yPercent: hide ? -160 : 0, duration: 0.6, ease, overwrite: "auto" }));
+      const mast = $(".masthead");
+      const mastEnd = () => (mast && innerWidth < 1024 ? mast.offsetTop + mast.offsetHeight : 0);
+      let navHidden = scrollY < mastEnd();
+      if (navHidden) G.set(nav, { yPercent: -220 });
+      const navTo = inCtx((hide) => G.to(nav, { yPercent: hide ? -220 : 0, duration: 0.6, ease, overwrite: "auto" }));
       ST.create({
         start: 0,
         end: "max",
         onUpdate: (self) => {
-          const hide = self.direction === 1 && self.scroll() > 320;
+          const y = self.scroll();
+          const hide = y < mastEnd() || (self.direction === 1 && (navHidden || y > 320));
           if (hide === navHidden) return;
           navHidden = hide;
           navTo(hide);
@@ -441,211 +379,64 @@
         animes.push(A.animate(A.svg.createDrawable(paths), { draw: ["0 0", "0 1"], duration: 900, delay: A.stagger(260), ease: "inOutQuad" }));
         undo.push(() => paths.forEach(cleanDrawable));
       };
-      const startPhone = inCtx(phone);
+      const startPenguin = inCtx(penguin);
       if (hero && playIntro && SplitText) {
         $(".hero .swoosh")?.remove();
-        const split = new SplitText("[data-split]", { type: "lines,words", mask: "lines" });
+        // The penguin is left out of the split so it can make its own entrance.
+        const split = new SplitText("[data-split]", { type: "lines,words", mask: "lines", ignore: ".hero-penguin" });
         G.set("[data-intro]", { visibility: "visible" });
-        G.timeline({ defaults: { ease, duration: 1.2 } })
-          .from(nav, { y: -30, autoAlpha: 0, duration: 1 })
-          .from(".nav .dot", { y: -22, autoAlpha: 0, ease: "back.out(3.5)", stagger: 0.09, duration: 0.7 }, "-=.55")
-          .from(".hero .pill", { y: 14, autoAlpha: 0, duration: 0.8 }, "-=.7")
+        const intro = G.timeline({ defaults: { ease, duration: 1.2 } })
+          .from(".masthead .wordmark", { y: -24, autoAlpha: 0, duration: 1 })
+          .from(".masthead .dot", { y: -24, autoAlpha: 0, ease: "back.out(3.5)", stagger: 0.09, duration: 0.7 }, "-=.55")
+          .from(".masthead-tag", { x: -12, autoAlpha: 0, duration: 0.8 }, "<+=.15");
+        if (!navHidden) intro.from(nav, { y: -30, autoAlpha: 0, duration: 1, clearProps: "opacity,visibility" }, 0.2);
+        intro
+          .from(".hero .pill", { y: 14, autoAlpha: 0, duration: 0.8 }, "-=.5")
           .from(split.words, { yPercent: 115, rotation: 5, transformOrigin: "0% 100%", stagger: 0.035, duration: 1.1 }, "-=.6")
+          .from(".hero-penguin", { yPercent: 70, scale: 0.3, rotation: -18, autoAlpha: 0, duration: 0.9, ease: "back.out(2.2)" }, "-=.95")
           .from(".hero .lede", { y: 26, autoAlpha: 0 }, "-=.85")
-          .from(".rotator", { y: 20, autoAlpha: 0 }, "-=.95")
-          .from("#join-hero", { y: 26, autoAlpha: 0 }, "-=1")
-          .from(".phone-wrap", { y: 90, rotateX: 18, rotateY: -12, autoAlpha: 0, duration: 1.6, transformPerspective: 1400 }, "-=1.35")
-          .from(".sat", { scale: 0.6, autoAlpha: 0, stagger: 0.12, ease: "back.out(2.2)", duration: 0.9 }, "-=.9")
-          .from(".s-fb .meter b", { scaleX: 0, stagger: 0.18, duration: 0.9 }, "-=.7")
-          .fromTo(".s-fb .verdict", { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.9 }, "-=.9")
+          .from("#join-hero", { y: 26, autoAlpha: 0 }, "-=.75")
+          // The phone rises into place once, its bar fills to where the answer
+          // came across, and 1.5s later "Attempt 2 · Strong" arrives below it.
+          // Nothing in the hero loops.
+          .from(".phone-wrap", { y: 40, autoAlpha: 0, duration: 1.2 }, "-=1.35")
+          .addLabel("bar", "-=.5")
+          .from(".phone .meter b", { scaleX: 0, stagger: 0.2, duration: 0.9 }, "bar")
+          .from(".next-chip", { y: 10, autoAlpha: 0, duration: 0.6 }, "bar+=1.5")
           .add(() => {
             root.classList.add("ready");
             split.revert();
             drawSwoosh(true);
-            startPhone(2.2);
+            startPenguin();
           });
       } else {
         root.classList.add("ready");
+        startPenguin();
         drawSwoosh(false);
-        if (hero) startPhone(1.2);
       }
 
-      // Real situations take turns under the lede, letter by letter.
-      const rot = $(".rot-text");
-      if (rot && (CONFIG.rotating || []).length > 1) {
-        const list = CONFIG.rotating;
-        let i = 0;
-        let visible = true;
-        let split = null;
-        let call = null;
-        ST.create({ trigger: ".hero", start: "top bottom", end: "bottom top", onToggle: (self) => { visible = self.isActive; } });
-        const step = () => {
-          if (dead) return;
-          call = G.delayedCall(2.8, step);
-          if (!visible || document.hidden) return;
-          i = (i + 1) % list.length;
-          G.to(rot, {
-            yPercent: -40,
-            autoAlpha: 0,
-            duration: 0.3,
-            ease: "power2.out",
-            onComplete: () => {
-              if (dead) return;
-              if (split) split.revert();
-              rot.textContent = list[i];
-              G.set(rot, { yPercent: 0, autoAlpha: 1 });
-              if (SplitText) {
-                split = new SplitText(rot, { type: "words,chars" });
-                G.from(split.chars, { yPercent: 100, autoAlpha: 0, duration: 0.55, ease, stagger: 0.012 });
-              }
-            },
-          });
-        };
-        call = G.delayedCall(playIntro ? 4.6 : 2.4, step);
-        undo.push(() => {
-          if (call) call.kill();
-          G.killTweensOf(rot);
-          if (split) { G.killTweensOf(split.chars); split.revert(); }
-          rot.textContent = list[0];
-          G.set(rot, { clearProps: "all" });
+      // The penguin at the corner of the headline hops when you touch it and
+      // when someone joins. It is looked up fresh because the headline's split
+      // and revert rebuild what is inside it.
+      function penguin() {
+        const pen = () => $(".hero-penguin");
+        if (!pen()) return;
+        // Squash, hop, land, settle.
+        hooks.hop = inCtx(() => {
+          const el = pen();
+          if (!el || G.isTweening(el)) return;
+          G.timeline()
+            .to(el, { scaleY: 0.84, scaleX: 1.1, duration: 0.12, ease: "power2.out" })
+            .to(el, { yPercent: -38, scaleY: 1.07, scaleX: 0.95, duration: 0.3, ease: "power2.out" })
+            .to(el, { yPercent: 0, scaleY: 1, scaleX: 1, duration: 0.3, ease: "power2.in" })
+            .to(el, { scaleY: 0.9, scaleX: 1.06, duration: 0.1, ease: "power1.out" })
+            .to(el, { scaleY: 1, scaleX: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" });
         });
-      }
-
-      if (hero) {
-        // Tags drift at different depths; the phone rises slower than the page.
-        // Only side by side: stacked on a phone, drifting up would cover the form.
-        if (innerWidth >= 980) {
-          $$(".sat").forEach((el) => {
-            G.to(el, { y: () => -120 * Number(el.dataset.depth), ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.8 } });
-          });
-          G.to(".stage", { y: -70, ease: "none", scrollTrigger: { trigger: hero, start: "top top", end: "bottom top", scrub: 0.8 } });
-        }
-        G.to(".phone", { y: -10, duration: 3.2, ease: "sine.inOut", yoyo: true, repeat: -1 });
-        if (fine) {
-          const rx = G.quickTo(".phone", "rotationX", { duration: 1.1, ease: "power3" });
-          const ry = G.quickTo(".phone", "rotationY", { duration: 1.1, ease: "power3" });
-          G.set(".phone", { transformPerspective: 1200 });
-          on(hero, "pointermove", (e) => {
-            const r = hero.getBoundingClientRect();
-            ry(((e.clientX - r.left) / r.width - 0.5) * 14);
-            rx(-((e.clientY - r.top) / r.height - 0.5) * 10);
-          });
-          on(hero, "pointerleave", () => { rx(0); ry(0); });
-        }
-      }
-
-      // The phone plays the app on a loop: pick the moment, say it, see how
-      // it landed. It rests whenever the hero is off screen.
-      function phone(delay) {
-        const box = $(".pchips");
-        const pick = $(".s-pick");
-        const rec = $(".s-rec");
-        const fb = $(".s-fb");
-        if (!box || !pick || !rec || !fb) return;
-        const chips = $$("span", box);
-        const words = $$(".cap span");
-        const timer = $(".s-rec .timer");
-        const hl = document.createElement("span");
-        hl.className = "chip-hl";
-        box.prepend(hl);
-        box.classList.add("js-hl");
-        undo.push(() => {
-          hl.remove();
-          box.classList.remove("js-hl");
-          chips.forEach((c) => c.classList.remove("on"));
-          if (timer) timer.textContent = "0:14";
-        });
-        // Layout offsets, not screen boxes: the phone is tilted in 3D.
-        const clipTo = (chip) =>
-          `inset(${chip.offsetTop}px ${box.clientWidth - chip.offsetLeft - chip.offsetWidth}px ${box.clientHeight - chip.offsetTop - chip.offsetHeight}px ${chip.offsetLeft}px round 999px)`;
-        const choose = (i) => chips.forEach((c, k) => c.classList.toggle("on", k === i));
-        const clock = { s: 0 };
-        const showClock = () => { if (timer) timer.textContent = "0:" + String(Math.floor(clock.s)).padStart(2, "0"); };
-        const speak = words.length * 0.19 + 0.3;
-
-        G.set([pick, rec], { autoAlpha: 0 });
-        const loop = G.timeline({ repeat: -1, delay, defaults: { ease } });
-        loop
-          .to(fb, { autoAlpha: 0, y: -14, duration: 0.4 })
-          .fromTo(pick, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, immediateRender: false }, "-=.15")
-          .call(() => choose(-1), null, "<")
-          .set(hl, { opacity: 0 }, "<")
-          .call(() => { hl.style.clipPath = clipTo(chips[1]); choose(1); }, null, "+=.4")
-          .to(hl, { opacity: 1, duration: 0.25 }, "<")
-          .to(hl, { clipPath: () => clipTo(chips[0]), duration: 0.55 }, "+=.55")
-          .call(() => choose(0), null, "<+=.12")
-          .to(".go", { scale: 0.95, duration: 0.12, ease: "power2.out" }, "+=.55")
-          .to(".go", { scale: 1, duration: 0.4, ease: "back.out(3)" })
-          .to(pick, { autoAlpha: 0, y: -14, duration: 0.4 }, "+=.1")
-          .fromTo(rec, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, immediateRender: false }, "-=.15")
-          .fromTo(words, { opacity: 0.2 }, { opacity: 1, duration: 0.2, stagger: 0.19, ease: "none", immediateRender: false }, "+=.15")
-          .fromTo(clock, { s: 0 }, { s: 14, duration: speak, ease: "none", onUpdate: showClock, immediateRender: false }, "<")
-          .to(rec, { autoAlpha: 0, y: -14, duration: 0.4 }, "+=.5")
-          .fromTo(fb, { autoAlpha: 0, y: 14 }, { autoAlpha: 1, y: 0, duration: 0.55, immediateRender: false }, "-=.15")
-          .fromTo(".s-fb .verdict", { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, immediateRender: false }, "<+=.1")
-          .fromTo(".s-fb .meter b", { scaleX: 0 }, { scaleX: 1, stagger: 0.18, duration: 0.8, immediateRender: false }, "<+=.1")
-          .fromTo(".s-fb .line, .s-fb .mini", { y: 10, autoAlpha: 0 }, { y: 0, autoAlpha: 1, stagger: 0.08, duration: 0.6, immediateRender: false }, "<")
-          .addLabel("rest")
-          .to({}, { duration: 3.2 });
-
-        // The live waveform on the recording screen (anime.js): a calm,
-        // speaking-pace sway. Bars near the middle run taller, the edges stay
-        // low, and each beat eases every bar to a new level from where it is.
-        let beat = null;
-        const bars = $$(".s-rec .wave i");
-        if (A && bars.length) {
-          const mid = (bars.length - 1) / 2;
-          const shape = bars.map((_, i) => 0.3 + 0.42 * Math.pow(1 - Math.abs(i - mid) / mid, 1.3));
-          beat = A.createTimer({
-            duration: 460,
-            loop: true,
-            onLoop: () => A.animate(bars, { scaleY: (_, i) => +(shape[i] * A.utils.random(0.62, 1, 2)).toFixed(2), duration: 460, ease: "inOutSine", delay: A.stagger(10, { from: "center" }) }),
-          });
-          animes.push(beat);
-          undo.push(() => { A.utils.remove(bars); bars.forEach((b) => b.removeAttribute("style")); });
-        }
-        const seen = ST.create({
-          trigger: ".hero",
-          start: "top bottom",
-          end: "bottom top",
-          onToggle: (self) => {
-            // Off screen it waits on the finished feedback screen, never
-            // halfway through a fade.
-            if (self.isActive) { loop.resume(); beat?.resume(); } else { loop.pause("rest"); beat?.pause(); }
-          },
-        });
-        if (!seen.isActive) { loop.pause("rest"); beat?.pause(); }
-        on(window, "resize", () => loop.invalidate());
-      }
-
-      // ------------------------------------------------ marquee that answers scroll speed
-      const rows = $$(".mrow");
-      if (rows.length) {
-        const tweens = rows.map((row) => {
-          const dir = Number(row.dataset.dir);
-          return G.fromTo(row, { xPercent: dir > 0 ? 0 : -50 }, { xPercent: dir > 0 ? -50 : 0, duration: 48, ease: "none", repeat: -1 });
-        });
-        const skew = G.quickTo(".marquee", "skewX", { duration: 0.5, ease: "power3" });
-        let settle;
-        const st = ST.create({
-          trigger: ".marquee",
-          start: "top bottom",
-          end: "bottom top",
-          onToggle: (self) => tweens.forEach((t) => (self.isActive ? t.resume() : t.pause())),
-          onUpdate: (self) => {
-            const v = self.getVelocity();
-            const boost = 1 + Math.abs(G.utils.clamp(-5, 5, v / 350));
-            tweens.forEach((t) => G.to(t, { timeScale: boost, duration: 0.2, overwrite: true }));
-            skew(G.utils.clamp(-7, 7, v / -260));
-            clearTimeout(settle);
-            settle = setTimeout(() => {
-              tweens.forEach((t) => G.to(t, { timeScale: 1, duration: 1.2, ease: "power2.out", overwrite: true }));
-              skew(0);
-            }, 140);
-          },
-        });
-        if (!st.isActive) tweens.forEach((t) => t.pause());
-        undo.push(() => { clearTimeout(settle); G.killTweensOf(tweens); });
+        undo.push(() => { hooks.hop = null; });
+        const title = $("#hero-title");
+        const onPenguin = (e) => { if (e.target.closest && e.target.closest(".hero-penguin")) hooks.hop && hooks.hop(); };
+        on(title, "pointerover", onPenguin);
+        on(title, "click", onPenguin);
       }
 
       // ------------------------------------------------ the privacy statement lights up as you read
@@ -659,17 +450,6 @@
         G.fromTo(words, { opacity: 0.14 }, { opacity: 1, stagger: 0.12, ease: "none", scrollTrigger: { trigger: scrub, start: "top 78%", end: "bottom 42%", scrub: 0.6 } });
         const marked = words.filter((w) => w.closest(".hl"));
         G.fromTo(marked, { "--hl": 0 }, { "--hl": 1, stagger: 0.25, ease: "none", scrollTrigger: { trigger: scrub, start: "top 52%", end: "bottom 46%", scrub: 0.6 } });
-      }
-
-
-      // The feedback cards pop in on a spring once they come into view
-      // (Motion), the next move last, because it is the one that matters.
-      const fbCards = $$(".fb3 .core");
-      if (M && fbCards.length && below(fbCards[0])) {
-        fbCards.forEach((el) => { el.style.opacity = "0"; springs.set(el, null); });
-        undo.push(M.inView(".fb3", () => {
-          fbCards.forEach((el, i) => spring(el, { opacity: [0, 1], transform: ["translateY(18px) scale(0.97)", "translateY(0px) scale(1)"] }, { type: "spring", stiffness: 300, damping: 22, delay: 0.1 + i * 0.14 }));
-        }, { amount: 0.35 }));
       }
 
       // ------------------------------------------------ generic reveals
@@ -698,7 +478,7 @@
 
       // Cards lift off their trays under the pointer (Motion springs).
       if (fine && M) {
-        const lift = M.hover($$(".pgrid li > div, .fb3 .core"), (el) => {
+        const lift = M.hover($$(".pgrid li > div"), (el) => {
           spring(el, { transform: "translateY(-6px)" }, { type: "spring", stiffness: 300, damping: 22 });
           return () => spring(el, { transform: "translateY(0px)" }, { type: "spring", stiffness: 300, damping: 26 });
         });
@@ -859,35 +639,6 @@
         ST.create({ trigger: closingTitle, start: "top 86%", once: true, onEnter: inCtx(() => G.to(split.chars, { yPercent: 0, rotation: 0, duration: 0.9, ease: "back.out(1.6)", stagger: 0.035 })) });
       }
 
-      const pen = $(".closing-penguin");
-      if (pen) {
-        if (below(pen)) {
-          G.set(pen, { x: -140, autoAlpha: 0 });
-          ST.create({
-            trigger: pen,
-            start: "top 90%",
-            once: true,
-            onEnter: inCtx(() => {
-              G.to(pen, { x: 0, autoAlpha: 1, duration: 1.6, ease });
-              G.fromTo(pen, { rotation: -7 }, { rotation: 7, duration: 0.42, ease: "sine.inOut", yoyo: true, repeat: 5, onComplete: inCtx(() => G.to(pen, { rotation: 0, duration: 0.5 })) });
-            }),
-          });
-        }
-        // Squash, hop, land, settle.
-        hooks.hop = inCtx(() => {
-          if (G.isTweening(pen)) return;
-          G.timeline()
-            .to(pen, { scaleY: 0.86, scaleX: 1.08, duration: 0.12, ease: "power2.out" })
-            .to(pen, { y: -34, scaleY: 1.06, scaleX: 0.96, duration: 0.3, ease: "power2.out" })
-            .to(pen, { y: 0, scaleY: 1, scaleX: 1, duration: 0.3, ease: "power2.in" })
-            .to(pen, { scaleY: 0.9, scaleX: 1.06, duration: 0.1, ease: "power1.out" })
-            .to(pen, { scaleY: 1, scaleX: 1, duration: 0.6, ease: "elastic.out(1, 0.4)" });
-        });
-        on(pen, "pointerenter", () => hooks.hop && hooks.hop());
-        on(pen, "click", () => hooks.hop && hooks.hop());
-        undo.push(() => { hooks.hop = null; });
-      }
-
       // ------------------------------------------------ the sign-off wordmark
       const big = $(".bigmark");
       if (big) {
@@ -960,77 +711,51 @@
     // Steps still below the fold start from their "before" state and play
     // in; anything already on screen is left as it is.
     const primed = steps.map((st) => below(st));
-    const typed = q(1, ".typed");
-    const typedFull = typed ? typed.textContent : "";
+    const chips = qa(0, ".vis-chips span");
+    const chosen = chips.findIndex((c) => c.classList.contains("on"));
+    const time = q(1, ".rec-time");
+    const timeFull = time ? time.textContent : "";
+    const later2 = [q(2, ".att-quote"), q(2, ".words .small-label"), ...qa(2, ".wchip")].filter(Boolean);
     ctx.add(() => {
-      if (primed[1] && typed) typed.textContent = "";
-      if (primed[3] && q(3, ".rec-time")) q(3, ".rec-time").textContent = "0:00";
-      if (primed[4]) G.set([q(4, ".fm-verdict"), ...qa(4, ".fm-obs span"), q(4, ".fm-next")].filter(Boolean), { autoAlpha: 0 });
-      if (primed[5]) G.set([...qa(5, ".att"), ...qa(5, ".att-arrow")], { autoAlpha: 0 });
+      if (primed[0]) chips.forEach((c) => c.classList.remove("on"));
+      if (primed[1] && time) time.textContent = "0:00";
+      if (primed[2]) G.set([...qa(2, ".att"), ...qa(2, ".att-arrow"), ...later2], { autoAlpha: 0 });
     });
     undo.push(() => {
-      if (typed) typed.textContent = typedFull;
-      if (q(3, ".rec-time")) q(3, ".rec-time").textContent = "0:14";
-      qa(2, ".vis-chips span").forEach((c, j) => c.classList.toggle("on", j === 2));
-      if (q(5, ".strong2")) q(5, ".strong2").textContent = "Strong";
+      chips.forEach((c, j) => c.classList.toggle("on", j === chosen));
+      if (time) time.textContent = timeFull;
+      if (q(2, ".strong2")) q(2, ".strong2").textContent = "Strong";
     });
     const played = new Set();
     const playStep = inCtx((i) => {
-      if (played.has(i) || !steps[i]) return;
+      if (played.has(i) || !steps[i] || !primed[i]) return;
       played.add(i);
       if (i === 0) {
-        // Real situations take turns in the pill while the section is on screen.
-        const text = q(0, ".sit-text");
-        const list = ["College interview", "Ask a teacher for help", "Join a group", "Push back respectfully", "Tell someone something bothered you", "Practice an upcoming speech"];
-        if (!text) return;
-        const tl = G.timeline({ repeat: -1, delay: 1.2 });
-        [...list.slice(1), list[0]].forEach((t) => {
-          tl.to(text, { yPercent: -100, autoAlpha: 0, duration: 0.28, ease: "power2.out" }, "+=1.7")
-            .call(() => { text.textContent = t; })
-            .fromTo(text, { yPercent: 100, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.42, ease, immediateRender: false });
-        });
-        ST.create({ trigger: "#how", start: "top bottom", end: "bottom top", onToggle: (self) => (self.isActive ? tl.resume() : tl.pause()) });
-        undo.push(() => { text.textContent = list[0]; });
-        return;
-      }
-      if (!primed[i]) return;
-      if (i === 1 && typed) {
-        // The personal detail types itself in.
-        const o = { n: 0 };
-        G.to(o, { n: typedFull.length, duration: typedFull.length * 0.03, ease: "none", delay: 0.25, onUpdate: () => { typed.textContent = typedFull.slice(0, Math.round(o.n)); } });
-      } else if (i === 2) {
-        const chips = qa(2, ".vis-chips span");
-        const tl = G.timeline();
-        [0, 4, 1, 2].forEach((k, n) => tl.call(() => chips.forEach((c, j) => c.classList.toggle("on", j === k)), null, n * 0.45));
-      } else if (i === 3) {
-        const el = q(3, ".rec-time");
+        // The impression is picked: a couple of the others, then Confident.
+        const tl = G.timeline({ delay: 0.35 });
+        [2, 1, chosen].forEach((k, n) => tl.call(() => chips.forEach((c, j) => c.classList.toggle("on", j === k)), null, n ? "+=.45" : 0));
+      } else if (i === 1 && time) {
+        // The answer is being recorded; the clock runs to where it stops.
+        const [m, sec] = timeFull.split(":").map(Number);
         const o = { s: 0 };
-        G.to(o, { s: 14, duration: 2.4, ease: "none", onUpdate: () => { el.textContent = "0:" + String(Math.floor(o.s)).padStart(2, "0"); } });
-      } else if (i === 4) {
-        // The reading, then a couple of observations, then the one move
-        // that matters, last and loudest.
-        G.timeline({ delay: 0.15 })
-          .fromTo(q(4, ".fm-verdict"), { yPercent: 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.5, ease })
-          .fromTo(qa(4, ".fm-obs span"), { scale: 0.85, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 0.45, ease: "back.out(2)", stagger: 0.12 }, "+=.05")
-          .fromTo(q(4, ".fm-next"), { y: 12, scale: 0.96, autoAlpha: 0 }, { y: 0, scale: 1, autoAlpha: 1, duration: 0.6, ease: "back.out(1.6)" }, "+=.1");
-      } else if (i === 5) {
-        // The loop: attempt one, the move, attempt two, which decodes into
-        // its better result (ScrambleText).
-        const [a1, mid, a2] = qa(5, ".att");
-        const [next1, next2] = qa(5, ".att-arrow");
-        const strong = q(5, ".strong2");
+        G.to(o, { s: m * 60 + sec, duration: 2.2, ease: "none", onUpdate: () => { time.textContent = "0:" + String(Math.floor(o.s)).padStart(2, "0"); } });
+      } else if (i === 2) {
+        // Attempt one, then attempt two, which decodes into its better result
+        // (ScrambleText); then what changed, and the words worth another look.
+        const [a1, a2] = qa(2, ".att");
+        const [arrow] = qa(2, ".att-arrow");
+        const strong = q(2, ".strong2");
         const tl = G.timeline({ delay: 0.2 })
           .fromTo(a1, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease })
-          .fromTo(next1, { x: -6, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(3)" }, "+=.05")
-          .fromTo(mid, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease }, "+=.05")
-          .fromTo(next2, { x: -6, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(3)" }, "+=.05")
+          .fromTo(arrow, { x: -6, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.4, ease: "back.out(3)" }, "+=.05")
           .fromTo(a2, { x: -8, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.45, ease }, "+=.05");
         if (strong && window.ScrambleTextPlugin) tl.to(strong, { duration: 0.8, scrambleText: { text: "Strong", chars: "lowerCase", speed: 0.5 }, ease: "none" }, "<");
+        tl.fromTo(later2, { y: 6, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.45, ease, stagger: 0.12 }, "+=.1");
       }
     });
 
     mm.add("(min-width: 1024px)", () => {
-      // Desktop: the six cards are laid down in order, then each plays its
+      // Desktop: the three cards are laid down in order, then each plays its
       // little demo.
       const grid = $(".steps");
       if (grid && steps.length && below(grid)) {
@@ -1056,6 +781,7 @@
     ST.sort();
     ST.refresh();
 
+    // Its own cleanup, which "Pause animations" runs.
     return () => {
       dead = true;
       hooks.side = null;
@@ -1080,12 +806,26 @@
     };
   }
 
+  // ---------------------------------------------------------- pause
+  // "Pause animations" in the footer stops all motion for the rest of the
+  // visit; "Play animations" brings it back. Nothing is saved.
+  const pauseBtn = $("[data-pause]");
+  pauseBtn?.addEventListener("click", () => {
+    paused = !paused;
+    root.classList.toggle("paused", paused);
+    pauseBtn.textContent = paused ? "Play animations" : "Pause animations";
+    if (stopMotion) stopMotion();
+    stopMotion = null;
+    if (!paused && haveCore()) stopMotion = startOn(false);
+    else startOff();
+  });
+
   // ---------------------------------------------------------- start
-  syncSwitch();
   // Split lines only once the fonts have loaded, or the line breaks are wrong.
   const fontsReady = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise((r) => setTimeout(r, 1200))]);
   const domReady = document.readyState === "loading" ? new Promise((r) => document.addEventListener("DOMContentLoaded", r)) : Promise.resolve();
   Promise.all([fontsReady, domReady]).then(() => {
-    teardown = mode === "on" && haveCore() ? startOn(scrollY < innerHeight * 0.5) : startOff();
+    if (haveCore()) stopMotion = startOn(scrollY < innerHeight * 0.5);
+    else startOff();
   });
 })();
