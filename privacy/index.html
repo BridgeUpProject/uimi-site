@@ -127,14 +127,12 @@ section{padding:clamp(96px,14vw,168px) 0}
 .done .core{padding:26px}
 .done h3{font-size:24px}
 .done h3+p{margin:8px 0 0;color:var(--slate)}
-.ask{margin-top:20px}
-.ask-q{font:800 15px/1.3 var(--display);margin:0 0 10px}
-.ask-roles{display:flex;flex-wrap:wrap;gap:8px}
-.ask-roles button{border:0;cursor:pointer;background:var(--off);box-shadow:inset 0 0 0 1px var(--ring);border-radius:999px;padding:12px 15px;font:700 14px/1 var(--display);color:var(--ink-soft);transition:background-color .25s var(--ease),color .25s var(--ease),scale .14s var(--ease)}
-.ask-roles button:active{scale:.96}
-.ask-roles button[aria-pressed=true]{background:var(--charcoal);color:#fff}
-.ask-thanks{font:700 14px/1.4 var(--display);color:var(--green);margin:10px 0 0}
-.ask-thanks:empty{display:none}
+.roles-q{font:800 15px/1.3 var(--display);margin:0 0 10px}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.roles button{border:0;cursor:pointer;background:var(--off);box-shadow:inset 0 0 0 1px var(--ring);border-radius:999px;padding:12px 15px;font:700 14px/1 var(--display);color:var(--ink-soft);transition:background-color .25s var(--ease),color .25s var(--ease),scale .14s var(--ease)}
+.roles button:active{scale:.96}
+.roles button[aria-pressed=true]{background:var(--charcoal);color:#fff}
+.closing .roles{justify-content:center}
 .share-q{margin:22px 0 10px;color:var(--slate);font-size:15px}
 .share{display:flex;gap:10px;flex-wrap:wrap}
 .share button{font:700 14px/1 var(--display);background:var(--blue-soft);color:var(--blue-deep);border:0;border-radius:999px;padding:13px 16px;cursor:pointer;transition:scale .14s var(--ease)}
@@ -259,9 +257,9 @@ html.js .tabpanel[data-idle]{display:none}
 .pgrid p{margin:0;color:#C3CBD5;font-size:15.5px;line-height:1.55}
 .pgrid .k{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(159,180,216,.14);margin-bottom:16px}
 .pgrid .k svg{width:22px;height:22px;fill:none;stroke:#DCE5F4;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.parents{margin-top:12px;padding:26px 28px;border-radius:30px;background:rgba(107,143,202,.14);box-shadow:inset 0 0 0 1px rgba(159,180,216,.22)}
-.parents h3{color:#fff;font-size:19px}
-.parents p{margin:8px 0 0;color:#D5DBE3;max-width:860px}
+.parents{margin-top:28px;padding:26px 28px;border-radius:30px;background:var(--blue-tint);box-shadow:inset 0 0 0 1px var(--ring)}
+.parents h3{color:var(--charcoal);font-size:19px}
+.parents p{margin:8px 0 0;color:var(--slate);max-width:860px}
 .faq{margin-top:48px}
 .faq details{border-bottom:1px solid rgba(47,55,64,.12)}
 .faq summary{cursor:pointer;list-style:none;font:800 clamp(18px,2vw,22px)/1.3 var(--display);letter-spacing:-.02em;padding:26px 56px 26px 0;position:relative}
@@ -310,7 +308,7 @@ footer.site .wordmark{font-size:22px}
 footer.site .pause{border:0;background:none;padding:0;font:inherit;color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 html.js:not(.ready) [data-intro]{visibility:hidden}
 html.paused *,html.paused *::before,html.paused *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
-html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
+html.paused .btn:active,html.paused .roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
 @media (hover:hover) and (pointer:fine){html.paused .btn:hover .ico{transform:none}}
 </style>
 </head>
@@ -370,6 +368,6 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <script src="/vendor/CustomEase.min.js" defer></script>
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/vendor/motion.min.js" defer></script>
-<script src="/site.js?v=a09df9e978" defer></script>
+<script src="/site.js?v=04e748f031" defer></script>
 </body>
 </html>

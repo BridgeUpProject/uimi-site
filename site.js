@@ -17,7 +17,6 @@
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
-  let ticket = null;
   let lenis = null;
   let paused = false;
   let stopMotion = null;
@@ -41,6 +40,9 @@
     const label = button.querySelector(".label");
     const field = form.querySelector(".field");
     const done = document.getElementById(form.id.replace("join-", "done-"));
+    // "I'm a ...": one pressed at a time, Parent by default.
+    const roles = $$(".roles button", form);
+    roles.forEach((b) => b.addEventListener("click", () => roles.forEach((o) => o.setAttribute("aria-pressed", String(o === b)))));
     email.addEventListener("input", () => {
       field.classList.remove("invalid");
       email.removeAttribute("aria-invalid");
@@ -68,13 +70,13 @@
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             email: value,
+            role: roles.find((b) => b.getAttribute("aria-pressed") === "true")?.dataset.role || "parent",
             company: form.querySelector("input[name=company]").value,
             source: campaign ? campaign + "-" + form.dataset.source : form.dataset.source,
           }),
         });
         const body = await res.json().catch(() => ({}));
         if (!res.ok || !body.ok) throw new Error(body.error || "Something went wrong. Please try again.");
-        ticket = typeof body.ticket === "string" ? body.ticket : null;
         const from = button.getBoundingClientRect();
         document.querySelectorAll("form.join").forEach((f) => { f.hidden = true; });
         document.querySelectorAll(".done").forEach((d) => d.classList.add("show"));
@@ -126,19 +128,6 @@
     }
     setTimeout(() => layer.remove(), 2700);
   }
-
-  // "I'm a ...", asked once the address is saved. One answer, sent once.
-  document.querySelectorAll(".ask-roles button").forEach((btn) => btn.addEventListener("click", () => {
-    const role = btn.dataset.role;
-    document.querySelectorAll(".ask").forEach((a) => { a.hidden = true; });
-    document.querySelectorAll(".ask-thanks").forEach((t) => { t.textContent = "Thanks. That helps us build the right thing."; });
-    const thanks = btn.closest(".core")?.querySelector(".ask-thanks");
-    if (thanks) { thanks.tabIndex = -1; thanks.focus({ preventScroll: true }); }
-    if (!ticket) return;
-    const once = ticket;
-    ticket = null;
-    fetch(CONFIG.endpoint, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ticket: once, role }) }).catch(() => {});
-  }));
 
   // ---------------------------------------------------------- situations: tabs by practice area
   // Without scripts every area shows as a list; with them, one at a time.

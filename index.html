@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UIMI: Say it out loud. See how you came across.</title>
-<meta name="description" content="UIMI is a private practice room for students. Pick a real situation, make it yours, say it out loud, and see how you likely came across. Join the waitlist.">
+<title>UIMI: Help your teen say it out loud.</title>
+<meta name="description" content="UIMI is a private practice room where teens rehearse real conversations out loud and get one thing to work on next. Parents pay, teens practice. Join the waitlist.">
 <link rel="canonical" href="https://uimi.app/">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://uimi.app/">
-<meta property="og:title" content="UIMI: Say it out loud. See how you came across.">
-<meta property="og:description" content="UIMI is a private practice room for students. Pick a real situation, make it yours, say it out loud, and see how you likely came across. Join the waitlist.">
+<meta property="og:title" content="UIMI: Help your teen say it out loud.">
+<meta property="og:description" content="UIMI is a private practice room where teens rehearse real conversations out loud and get one thing to work on next. Parents pay, teens practice. Join the waitlist.">
 <meta property="og:image" content="https://uimi.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -127,14 +127,12 @@ section{padding:clamp(96px,14vw,168px) 0}
 .done .core{padding:26px}
 .done h3{font-size:24px}
 .done h3+p{margin:8px 0 0;color:var(--slate)}
-.ask{margin-top:20px}
-.ask-q{font:800 15px/1.3 var(--display);margin:0 0 10px}
-.ask-roles{display:flex;flex-wrap:wrap;gap:8px}
-.ask-roles button{border:0;cursor:pointer;background:var(--off);box-shadow:inset 0 0 0 1px var(--ring);border-radius:999px;padding:12px 15px;font:700 14px/1 var(--display);color:var(--ink-soft);transition:background-color .25s var(--ease),color .25s var(--ease),scale .14s var(--ease)}
-.ask-roles button:active{scale:.96}
-.ask-roles button[aria-pressed=true]{background:var(--charcoal);color:#fff}
-.ask-thanks{font:700 14px/1.4 var(--display);color:var(--green);margin:10px 0 0}
-.ask-thanks:empty{display:none}
+.roles-q{font:800 15px/1.3 var(--display);margin:0 0 10px}
+.roles{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.roles button{border:0;cursor:pointer;background:var(--off);box-shadow:inset 0 0 0 1px var(--ring);border-radius:999px;padding:12px 15px;font:700 14px/1 var(--display);color:var(--ink-soft);transition:background-color .25s var(--ease),color .25s var(--ease),scale .14s var(--ease)}
+.roles button:active{scale:.96}
+.roles button[aria-pressed=true]{background:var(--charcoal);color:#fff}
+.closing .roles{justify-content:center}
 .share-q{margin:22px 0 10px;color:var(--slate);font-size:15px}
 .share{display:flex;gap:10px;flex-wrap:wrap}
 .share button{font:700 14px/1 var(--display);background:var(--blue-soft);color:var(--blue-deep);border:0;border-radius:999px;padding:13px 16px;cursor:pointer;transition:scale .14s var(--ease)}
@@ -259,9 +257,9 @@ html.js .tabpanel[data-idle]{display:none}
 .pgrid p{margin:0;color:#C3CBD5;font-size:15.5px;line-height:1.55}
 .pgrid .k{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(159,180,216,.14);margin-bottom:16px}
 .pgrid .k svg{width:22px;height:22px;fill:none;stroke:#DCE5F4;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.parents{margin-top:12px;padding:26px 28px;border-radius:30px;background:rgba(107,143,202,.14);box-shadow:inset 0 0 0 1px rgba(159,180,216,.22)}
-.parents h3{color:#fff;font-size:19px}
-.parents p{margin:8px 0 0;color:#D5DBE3;max-width:860px}
+.parents{margin-top:28px;padding:26px 28px;border-radius:30px;background:var(--blue-tint);box-shadow:inset 0 0 0 1px var(--ring)}
+.parents h3{color:var(--charcoal);font-size:19px}
+.parents p{margin:8px 0 0;color:var(--slate);max-width:860px}
 .faq{margin-top:48px}
 .faq details{border-bottom:1px solid rgba(47,55,64,.12)}
 .faq summary{cursor:pointer;list-style:none;font:800 clamp(18px,2vw,22px)/1.3 var(--display);letter-spacing:-.02em;padding:26px 56px 26px 0;position:relative}
@@ -310,7 +308,7 @@ footer.site .wordmark{font-size:22px}
 footer.site .pause{border:0;background:none;padding:0;font:inherit;color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 html.js:not(.ready) [data-intro]{visibility:hidden}
 html.paused *,html.paused *::before,html.paused *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
-html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
+html.paused .btn:active,html.paused .roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
 @media (hover:hover) and (pointer:fine){html.paused .btn:hover .ico{transform:none}}
 </style>
 </head>
@@ -325,9 +323,11 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <div class="wrap hero-grid">
 <div class="hero-copy">
 <span class="pill" data-intro><i></i>Coming soon to iPhone</span>
-<h1 id="hero-title" data-split data-intro><span class="hero-penguin" aria-hidden="true"><svg class="hero-penguin-art" viewBox="0 0 200 240" aria-hidden="true"><g transform="rotate(6 100 135)"><ellipse cx="64" cy="212" rx="15" ry="7" fill="#C98A4B" transform="rotate(-14 64 212)"/><ellipse cx="128" cy="222" rx="15" ry="7" fill="#C98A4B" transform="rotate(10 128 222)"/><ellipse cx="34" cy="118" rx="16" ry="36" fill="#2F3740" transform="rotate(-45 34 118)"/><ellipse cx="166" cy="150" rx="16" ry="36" fill="#2F3740" transform="rotate(45 166 150)"/><ellipse cx="100" cy="135" rx="60" ry="80" fill="#2F3740"/><ellipse cx="100" cy="148" rx="38" ry="58" fill="#F8F7F4"/><circle cx="100" cy="42" r="7" fill="#6B8FCA"/><circle cx="68" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><circle cx="132" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><path d="M74 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><path d="M110 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><polygon points="90,108 110,108 100,124" fill="#C98A4B"/></g></svg></span>Say it out loud. <span class="accent">See how you <span class="mark">came across.</span></span></h1>
-<p class="lede" data-intro>UIMI is a private practice room for students. Pick a real moment, say your response, and get one thing to work on next. Audio only. Nothing shared.</p>
+<h1 id="hero-title" data-split data-intro><span class="hero-penguin" aria-hidden="true"><svg class="hero-penguin-art" viewBox="0 0 200 240" aria-hidden="true"><g transform="rotate(6 100 135)"><ellipse cx="64" cy="212" rx="15" ry="7" fill="#C98A4B" transform="rotate(-14 64 212)"/><ellipse cx="128" cy="222" rx="15" ry="7" fill="#C98A4B" transform="rotate(10 128 222)"/><ellipse cx="34" cy="118" rx="16" ry="36" fill="#2F3740" transform="rotate(-45 34 118)"/><ellipse cx="166" cy="150" rx="16" ry="36" fill="#2F3740" transform="rotate(45 166 150)"/><ellipse cx="100" cy="135" rx="60" ry="80" fill="#2F3740"/><ellipse cx="100" cy="148" rx="38" ry="58" fill="#F8F7F4"/><circle cx="100" cy="42" r="7" fill="#6B8FCA"/><circle cx="68" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><circle cx="132" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><path d="M74 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><path d="M110 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><polygon points="90,108 110,108 100,124" fill="#C98A4B"/></g></svg></span>Help your teen say it <span class="accent"><span class="mark">out loud.</span></span></h1>
+<p class="lede" data-intro>UIMI is a private practice room where your teen rehearses the conversations that matter, from the college interview to the awkward silence, and gets one thing to work on next. Audio only. Nothing shared.</p>
 <form class="join" id="join-hero" data-source="hero" novalidate data-intro>
+<p class="roles-q" id="roles-hero">I'm a:</p>
+<div class="roles" role="group" aria-labelledby="roles-hero"><button type="button" data-role="parent" aria-pressed="true">Parent</button><button type="button" data-role="student" aria-pressed="false">Student</button><button type="button" data-role="educator" aria-pressed="false">Teacher or counselor</button><button type="button" data-role="other" aria-pressed="false">Something else</button></div>
 <div class="bezel form-bezel"><div class="core field">
 <label class="hp" for="company-hero">Leave this empty</label><input class="hp" id="company-hero" name="company" tabindex="-1" autocomplete="off">
 <label class="hp" for="email-hero">Email address</label>
@@ -339,12 +339,7 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 </form>
 <div class="done" id="done-hero" tabindex="-1"><div class="bezel"><div class="core">
 <h3>You're on the list.</h3>
-<p>We'll email you when UIMI is ready.</p>
-<div class="ask">
-<p class="ask-q" id="ask-hero">One quick question. I'm a:</p>
-<div class="ask-roles" role="group" aria-labelledby="ask-hero"><button type="button" data-role="student">Student</button><button type="button" data-role="parent">Parent</button><button type="button" data-role="educator">Teacher or counselor</button><button type="button" data-role="other">Something else</button></div>
-</div>
-<p class="ask-thanks" role="status"></p>
+<p>When UIMI launches, you'll set up the account and send your teen an invite link. They practice on their own phone.</p>
 <p class="share-q">Know someone with a big conversation coming up?</p>
 <div class="share"><button type="button" data-share>Share UIMI</button><button type="button" data-copy>Copy link</button></div>
 </div></div></div>
@@ -389,6 +384,10 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <p class="est"><b>An estimate, not a verdict.</b> Feedback is based on what you actually said. It never claims to know what anyone felt, and it never labels who you are.</p>
 </div></li>
 </ol>
+<div class="parents" id="parents" data-reveal>
+<h3>For parents</h3>
+<p>You subscribe and send your teen an invite link. They practice on their own phone. You'll see how often they practice and which arenas they've used, but never the recordings or transcripts. Teens practice more honestly when it's private, and that's the point. Cancel any time, in one tap.</p>
+</div>
 </div>
 </section>
 
@@ -419,7 +418,7 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <div class="priv-head">
 <div class="sec-head">
 <span class="pill" data-reveal>Private practice</span>
-<h2 id="privacy-title" data-scrub>Private from everyone. <span class="hl">Including the parent who pays.</span></h2>
+<h2 id="privacy-title" data-scrub>Private, <span class="hl">so they actually practice.</span></h2>
 </div>
 <div class="dots" aria-hidden="true"></div>
 </div>
@@ -431,10 +430,6 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <li data-reveal><div><span class="k" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/><path d="M4 4l16 16"/></svg></span><h3>No ads, no trackers</h3><p>No advertising and no analytics trackers. UIMI collects only what it needs to work.</p></div></li>
 <li data-reveal><div><span class="k" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg></span><h3>Safety built in</h3><p>If something sounds like more than practice, UIMI pauses the coaching and points to real help.</p></div></li>
 </ul>
-<div class="parents" id="parents" data-reveal>
-<h3>For parents and guardians</h3>
-<p>You can pay for Premium, but there's no parent dashboard and no access to recordings or transcripts. Students practice more openly when it's private, so that's how UIMI is built.</p>
-</div>
 </div>
 </div>
 </section>
@@ -446,9 +441,11 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <h2 id="faq-title">Questions.</h2>
 </div>
 <div class="faq">
+<details data-reveal><summary>How does it work if I'm paying for my teen?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>You subscribe, then send your teen an invite link. They set up their own practice room on their phone. You never need to log in to their account, and you can cancel any time from yours.</p></div></details>
+<details data-reveal><summary>Can I see how my teen is doing?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>You'll see how many times they've practiced and which arenas they've used. You won't see recordings, transcripts, or feedback. That stays with them, so they'll actually use it.</p></div></details>
 <details data-reveal><summary>What is UIMI?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>A private practice room for real conversations. Pick a situation, say your response out loud, and see how you likely came across, with one thing to improve before you try again. An AI model transcribes what you said and reads your words and delivery against the situation and the impression you were going for. It's an estimate, not a verdict.</p></div></details>
-<details data-reveal><summary>Who is UIMI for?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Students, from high school through college, who want to feel ready for the conversations that matter: interviews, class, presentations, and the everyday ones that feel awkward. You can also paste your own speech or describe the conversation you're about to have. UIMI is for ages 13 and up.</p></div></details>
-<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Audio only. No camera, no audience. Yes. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. A parent who pays does not get access. You can delete any practice, or your whole account, right in the app.</p></div></details>
+<details data-reveal><summary>Who is UIMI for?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Teens and young adults, from high school through college, who want to feel ready for the conversations that matter: interviews, class, presentations, and the everyday ones that feel awkward. Parents subscribe; teens practice. UIMI is for ages 13 and up.</p></div></details>
+<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Audio only. No camera, no audience. Yes. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. Parents see practice counts, never recordings or transcripts. You can delete any practice, or your whole account, right in the app.</p></div></details>
 <details data-reveal><summary>Is UIMI therapy?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>No. UIMI is a practice tool, like rehearsing with a coach. It isn't counselling or mental health care, and it isn't a crisis service. If someone is struggling or feels unsafe, in the US they can call or text 988 at any time.</p></div></details>
 <details data-reveal><summary>When is UIMI launching?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>UIMI is coming to iPhone first. Join the waitlist and we'll email you as soon as it's ready.</p></div></details>
 <details data-reveal><summary>Is UIMI free?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Your first situation is free, with unlimited attempts. Premium unlocks the rest, with prices shown clearly before anyone pays.</p></div></details>
@@ -459,8 +456,10 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <section id="join" class="closing" aria-labelledby="join-title">
 <div class="wrap narrow">
 <h2 id="join-title" data-chars>Be first in line.</h2>
-<p class="lede" style="margin-left:auto;margin-right:auto" data-reveal>Practice before it counts. Join the waitlist and we'll email you when UIMI opens.</p>
+<p class="lede" style="margin-left:auto;margin-right:auto" data-reveal>Practice before it counts. Join the waitlist and we'll email you when UIMI opens for your teen.</p>
 <form class="join" id="join-footer" data-source="footer" novalidate>
+<p class="roles-q" id="roles-footer">I'm a:</p>
+<div class="roles" role="group" aria-labelledby="roles-footer"><button type="button" data-role="parent" aria-pressed="true">Parent</button><button type="button" data-role="student" aria-pressed="false">Student</button><button type="button" data-role="educator" aria-pressed="false">Teacher or counselor</button><button type="button" data-role="other" aria-pressed="false">Something else</button></div>
 <div class="bezel form-bezel"><div class="core field">
 <label class="hp" for="company-footer">Leave this empty</label><input class="hp" id="company-footer" name="company" tabindex="-1" autocomplete="off">
 <label class="hp" for="email-footer">Email address</label>
@@ -472,12 +471,7 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 </form>
 <div class="done" id="done-footer" tabindex="-1"><div class="bezel"><div class="core">
 <h3>You're on the list.</h3>
-<p>We'll email you when UIMI is ready.</p>
-<div class="ask">
-<p class="ask-q" id="ask-footer">One quick question. I'm a:</p>
-<div class="ask-roles" role="group" aria-labelledby="ask-footer"><button type="button" data-role="student">Student</button><button type="button" data-role="parent">Parent</button><button type="button" data-role="educator">Teacher or counselor</button><button type="button" data-role="other">Something else</button></div>
-</div>
-<p class="ask-thanks" role="status"></p>
+<p>When UIMI launches, you'll set up the account and send your teen an invite link. They practice on their own phone.</p>
 <p class="share-q">Know someone with a big conversation coming up?</p>
 <div class="share"><button type="button" data-share>Share UIMI</button><button type="button" data-copy>Copy link</button></div>
 </div></div></div>
@@ -496,6 +490,6 @@ html.paused .btn:active,html.paused .ask-roles button:active,html.paused .tablis
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/vendor/anime.min.js" defer></script>
 <script src="/vendor/motion.min.js" defer></script>
-<script src="/site.js?v=a09df9e978" defer></script>
+<script src="/site.js?v=04e748f031" defer></script>
 </body>
 </html>
