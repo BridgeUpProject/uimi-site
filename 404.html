@@ -302,10 +302,17 @@ th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px sol
 th{font:800 12px/1.3 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 td{color:var(--slate)}
 @media (max-width:560px){thead{display:none}tr{display:block;border-bottom:1px solid rgba(47,55,64,.08);padding:8px 0}td{display:block;border:0;padding:4px 0}td::before{content:attr(data-label);display:block;font:800 11px/1.3 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}}
-footer.site{padding:36px 0 96px;color:var(--muted);font-size:14px}
-footer.site .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(47,55,64,.1);padding-top:28px}
+.nowrap{white-space:nowrap}
+footer.site{padding:36px 0 72px;color:var(--muted);font-size:14px}
+footer.site .wrap{border-top:1px solid rgba(47,55,64,.1);padding-top:28px}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:20px 32px;flex-wrap:wrap}
 footer.site .wordmark{font-size:22px}
+.foot-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;font:700 14px/1.2 var(--display)}
+.foot-links a{color:var(--ink-soft);text-decoration:none}
+.foot-links a:hover{color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px}
 footer.site .pause{border:0;background:none;padding:0;font:inherit;color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.foot-meta{margin:18px 0 0;font-size:13px;color:var(--muted)}
+@media (max-width:640px){.foot-row{flex-direction:column;align-items:flex-start;gap:18px}.foot-links{gap:12px 22px}}
 html.js:not(.ready) [data-intro]{visibility:hidden}
 html.paused *,html.paused *::before,html.paused *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
 html.paused .btn:active,html.paused .roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
@@ -320,7 +327,10 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <main id="main">
 <section class="closing" style="min-height:80dvh;display:flex;align-items:center"><div class="wrap narrow"><svg class="penguin" viewBox="0 0 200 240" aria-hidden="true"><g transform="rotate(6 100 135)"><ellipse cx="64" cy="212" rx="15" ry="7" fill="#C98A4B" transform="rotate(-14 64 212)"/><ellipse cx="128" cy="222" rx="15" ry="7" fill="#C98A4B" transform="rotate(10 128 222)"/><ellipse cx="34" cy="118" rx="16" ry="36" fill="#2F3740" transform="rotate(-45 34 118)"/><ellipse cx="166" cy="150" rx="16" ry="36" fill="#2F3740" transform="rotate(45 166 150)"/><ellipse cx="100" cy="135" rx="60" ry="80" fill="#2F3740"/><ellipse cx="100" cy="148" rx="38" ry="58" fill="#F8F7F4"/><circle cx="100" cy="42" r="7" fill="#6B8FCA"/><circle cx="68" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><circle cx="132" cy="114" r="11" fill="#6B8FCA" opacity=".4"/><path d="M74 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><path d="M110 100 q8 -8 16 0" fill="none" stroke="#2F3740" stroke-width="4" stroke-linecap="round"/><polygon points="90,108 110,108 100,124" fill="#C98A4B"/></g></svg><h1>This page wandered off</h1><p class="lede" style="margin:18px auto 30px">The link may be old or mistyped.</p><a class="btn" href="/">Go to uimi.app<span class="ico"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></div></section>
 </main>
-<footer class="site"><div class="wrap"><span><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a></span><span>UIMI · New York · <a href="mailto:support@uimi.app">support@uimi.app</a> · <a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram @uimi.app</a></span><span><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a></span></div></footer>
+<footer class="site"><div class="wrap">
+<div class="foot-row"><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a><nav class="foot-links" aria-label="Footer"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a><a href="mailto:support@uimi.app">support@uimi.app</a><a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram</a></nav></div>
+<p class="foot-meta">UIMI, New York. For ages 13 and up.</p>
+</div></footer>
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vendor/CustomEase.min.js" defer></script>

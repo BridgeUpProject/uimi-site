@@ -302,10 +302,17 @@ th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px sol
 th{font:800 12px/1.3 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 td{color:var(--slate)}
 @media (max-width:560px){thead{display:none}tr{display:block;border-bottom:1px solid rgba(47,55,64,.08);padding:8px 0}td{display:block;border:0;padding:4px 0}td::before{content:attr(data-label);display:block;font:800 11px/1.3 var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}}
-footer.site{padding:36px 0 96px;color:var(--muted);font-size:14px}
-footer.site .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid rgba(47,55,64,.1);padding-top:28px}
+.nowrap{white-space:nowrap}
+footer.site{padding:36px 0 72px;color:var(--muted);font-size:14px}
+footer.site .wrap{border-top:1px solid rgba(47,55,64,.1);padding-top:28px}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:20px 32px;flex-wrap:wrap}
 footer.site .wordmark{font-size:22px}
+.foot-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 24px;font:700 14px/1.2 var(--display)}
+.foot-links a{color:var(--ink-soft);text-decoration:none}
+.foot-links a:hover{color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px}
 footer.site .pause{border:0;background:none;padding:0;font:inherit;color:var(--blue-deep);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.foot-meta{margin:18px 0 0;font-size:13px;color:var(--muted)}
+@media (max-width:640px){.foot-row{flex-direction:column;align-items:flex-start;gap:18px}.foot-links{gap:12px 22px}}
 html.js:not(.ready) [data-intro]{visibility:hidden}
 html.paused *,html.paused *::before,html.paused *::after{animation:none!important;transition-property:color,background-color,border-color,box-shadow,opacity,text-decoration-color,fill,stroke!important}
 html.paused .btn:active,html.paused .roles button:active,html.paused .tablist button:active,html.paused .share button:active{scale:none}
@@ -362,7 +369,10 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <h2>12. Contact</h2>
 <p><strong><a href="mailto:support@uimi.app">support@uimi.app</a></strong></p></div></article></div></div>
 </main>
-<footer class="site"><div class="wrap"><span><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a></span><span>UIMI · New York · <a href="mailto:support@uimi.app">support@uimi.app</a> · <a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram @uimi.app</a></span><span><a href="/privacy/">Privacy Policy</a> · <a href="/terms/">Terms of Service</a></span></div></footer>
+<footer class="site"><div class="wrap">
+<div class="foot-row"><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a><nav class="foot-links" aria-label="Footer"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a><a href="mailto:support@uimi.app">support@uimi.app</a><a href="https://www.instagram.com/uimi.app/" rel="me noopener" target="_blank">Instagram</a></nav></div>
+<p class="foot-meta">UIMI, New York. For ages 13 and up.</p>
+</div></footer>
 <script src="/vendor/gsap.min.js" defer></script>
 <script src="/vendor/ScrollTrigger.min.js" defer></script>
 <script src="/vendor/CustomEase.min.js" defer></script>
