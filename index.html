@@ -140,9 +140,9 @@ section{padding:clamp(96px,14vw,168px) 0}
 .stage{position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 0}
 .phone{width:min(330px,88vw);border-radius:52px;padding:10px;background:var(--tray);box-shadow:0 0 0 1px var(--ring),0 60px 120px -50px rgba(47,55,64,.45),0 30px 60px -40px rgba(47,55,64,.3)}
 .screen{display:flex;flex-direction:column;height:var(--screen-h,676px);background:var(--off);border-radius:44px;padding:30px 20px 20px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
-@media (max-width:422px){.screen{padding:26px 16px 18px}}
-@media (max-width:374px){.screen{--screen-h:730px}}
-@media (max-width:339px){.screen{--screen-h:766px}}
+@media (max-width:422px){.screen{padding:26px 16px 18px;--screen-h:650px}}
+@media (max-width:374px){.screen{--screen-h:706px}}
+@media (max-width:339px){.screen{--screen-h:728px}}
 .fb-head{margin:0 0 12px;font:700 12.5px/1.3 var(--display);color:var(--muted)}
 .fb-result{margin:0 0 14px;font:700 20px/1.25 var(--display);letter-spacing:-.02em;color:var(--charcoal)}
 .fb-result b{font-weight:800}
@@ -151,19 +151,16 @@ section{padding:clamp(96px,14vw,168px) 0}
 .meter{display:flex;gap:5px}.meter i{flex:1;height:5px;border-radius:9px;background:#E4E2DD;overflow:hidden}.meter b{display:block;height:100%;background:var(--amber);border-radius:9px;transform-origin:0 50%}
 .mlabels{display:flex;justify-content:space-between;margin:7px 0 14px;font:700 10px/1 var(--display);color:var(--muted)}
 .mlabels .on{color:var(--amber-deep)}
-.screen .line{font-size:13.5px;line-height:1.45;margin:0 0 12px}
-.mini{background:#fff;border-radius:18px;padding:12px 13px;margin-top:8px;box-shadow:0 0 0 1px var(--ring)}
-.mini.blue{background:var(--blue-soft);box-shadow:0 0 0 1px rgba(107,143,202,.28)}
-.mlbl{display:inline-flex;align-items:center;gap:7px;font:800 12px/1 var(--display);color:var(--slate)}
-.mlbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--blue))}
-.mini p{margin:7px 0 0;font:700 13.5px/1.4 var(--display);letter-spacing:-.01em}
-.nextmove>p{margin-top:6px}
-.try{margin-top:10px;background:#fff;border-radius:12px;padding:9px 11px 10px 13px;box-shadow:inset 3px 0 0 var(--blue),0 0 0 1px rgba(107,143,202,.22)}
-.tlbl{display:block;font:800 9.5px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--blue-deep)}
-.mini .try p{margin:6px 0 0;font:500 12.5px/1.45 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;letter-spacing:0;color:var(--charcoal)}
-.tip{margin-top:10px}
-.tip .tlbl{color:var(--slate)}
-.mini .tip p{margin:5px 0 0;font:600 12.5px/1.4 var(--display);color:var(--ink-soft)}
+.fb{flex:1;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 0 0 1px var(--ring),0 16px 30px -24px rgba(47,55,64,.3)}
+.fb-top{padding:16px 16px 15px}
+.fb-k{display:block;font:800 9.5px/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.fb-title{margin:8px 0 0;font:800 19px/1.2 var(--display);letter-spacing:-.02em;color:var(--charcoal)}
+.fb-why,.fb-try{margin:5px 0 0;font:500 13px/1.5 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;color:var(--ink-soft)}
+.fb-sub{margin:14px 0 0;font:800 13px/1.2 var(--display);color:var(--blue-deep)}
+.fb-try{color:var(--charcoal)}
+.fb-eg{flex:1;background:var(--blue-soft);padding:14px 16px 16px}
+.fb-eg .fb-k{color:var(--blue-deep)}
+.fb-eg p{margin:8px 0 0;font:500 13.5px/1.55 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;color:var(--charcoal)}
 .next-chip{position:relative;z-index:2;margin-top:-18px;background:var(--charcoal);color:#fff;border-radius:999px;padding:10px 15px;font:800 13px/1 var(--display);box-shadow:0 0 0 1px var(--ring),0 24px 40px -22px rgba(47,55,64,.35)}
 .sit{background:#fff;border-radius:14px;padding:11px 12px;box-shadow:0 0 0 1px var(--ring)}
 .sit b{display:block;font:800 15px/1.2 var(--display);letter-spacing:-.02em}
@@ -360,17 +357,21 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 </div></div></div>
 </div>
 <div class="stage" data-intro>
-<div class="phone-wrap" role="img" aria-label="A preview of UIMI's feedback on a college interview answer: aimed for Confident, came across Mixed, with what worked, the next move, a line to try saying and a delivery tip.">
+<div class="phone-wrap" role="img" aria-label="A preview of UIMI's feedback on a college interview answer: aimed for Confident, came across Mixed and a little unsure, with one thing to try and an example of a stronger answer.">
 <div class="phone" aria-hidden="true"><div class="screen">
 <p class="fb-head">College interview · Attempt 1</p>
 <p class="fb-result">Aimed for <b class="aim">Confident</b>. Came&nbsp;across&nbsp;<b class="got">Mixed</b>.</p>
 <div class="meter"><i><b></b></i><i><b></b></i><i></i></div>
 <div class="mlabels"><span>Needs work</span><span class="on">Mixed</span><span>Strong</span></div>
-<p class="line">Honest, but “I guess” and “yeah” made you sound unsure of the good stuff.</p>
-<div class="mini"><span class="mlbl" style="--c:#35674F">What worked</span><p>You gave real specifics. “I run cross country.”</p></div>
-<div class="mini blue nextmove"><span class="mlbl">Your next move</span><p>Start with cross country, then explain what it says about you. Replace “I&nbsp;guess” with a clear statement.</p>
-<div class="try"><span class="tlbl">Try saying</span><p>“I run cross country, and it’s taught me how to stay disciplined even when progress feels slow. I’ve learned to keep showing up and pushing myself, especially when something is difficult.”</p></div>
-<div class="tip"><span class="tlbl">Delivery tip</span><p>Say it again with a steady pace. Let your experience speak for itself.</p></div></div>
+<div class="fb">
+<div class="fb-top"><span class="fb-k">Your feedback</span>
+<p class="fb-title">A little unsure</p>
+<p class="fb-why">You said “I&nbsp;guess” before mentioning cross country, which made you sound less confident than you intended.</p>
+<p class="fb-sub">One thing to try</p>
+<p class="fb-try">Drop “I&nbsp;guess” and share what excites you about running. A specific example will make your answer feel more personal.</p></div>
+<div class="fb-eg"><span class="fb-k">Something like this</span>
+<p>“I’ve been running cross country for four years, and honestly, one of my favorite parts is trying to beat my own times. Last season, I was determined to break 20 minutes in a 5K. I kept working at it, even on days when practice was rough. I just love pushing myself and seeing how far I can go.”</p></div>
+</div>
 </div></div>
 </div>
 <span class="next-chip" aria-hidden="true">Attempt 2 · Strong</span>
