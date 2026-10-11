@@ -138,10 +138,11 @@ section{padding:clamp(96px,14vw,168px) 0}
 .share button{font:700 14px/1 var(--display);background:var(--blue-soft);color:var(--blue-deep);border:0;border-radius:999px;padding:13px 16px;cursor:pointer;transition:scale .14s var(--ease)}
 .share button:active{scale:.97}
 .stage{position:relative;display:flex;flex-direction:column;align-items:center;padding:24px 0}
-.phone{width:min(330px,78vw);border-radius:52px;padding:10px;background:var(--tray);box-shadow:0 0 0 1px var(--ring),0 60px 120px -50px rgba(47,55,64,.45),0 30px 60px -40px rgba(47,55,64,.3)}
-.screen{display:flex;flex-direction:column;height:var(--screen-h,468px);background:var(--off);border-radius:44px;padding:30px 20px 20px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
-@media (max-width:422px){.screen{--screen-h:488px}}
-@media (max-width:340px){.screen{--screen-h:514px}}
+.phone{width:min(330px,88vw);border-radius:52px;padding:10px;background:var(--tray);box-shadow:0 0 0 1px var(--ring),0 60px 120px -50px rgba(47,55,64,.45),0 30px 60px -40px rgba(47,55,64,.3)}
+.screen{display:flex;flex-direction:column;height:var(--screen-h,676px);background:var(--off);border-radius:44px;padding:30px 20px 20px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8)}
+@media (max-width:422px){.screen{padding:26px 16px 18px}}
+@media (max-width:374px){.screen{--screen-h:730px}}
+@media (max-width:339px){.screen{--screen-h:766px}}
 .fb-head{margin:0 0 12px;font:700 12.5px/1.3 var(--display);color:var(--muted)}
 .fb-result{margin:0 0 14px;font:700 20px/1.25 var(--display);letter-spacing:-.02em;color:var(--charcoal)}
 .fb-result b{font-weight:800}
@@ -156,6 +157,13 @@ section{padding:clamp(96px,14vw,168px) 0}
 .mlbl{display:inline-flex;align-items:center;gap:7px;font:800 12px/1 var(--display);color:var(--slate)}
 .mlbl::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--c,var(--blue))}
 .mini p{margin:7px 0 0;font:700 13.5px/1.4 var(--display);letter-spacing:-.01em}
+.nextmove>p{margin-top:6px}
+.try{margin-top:10px;background:#fff;border-radius:12px;padding:9px 11px 10px 13px;box-shadow:inset 3px 0 0 var(--blue),0 0 0 1px rgba(107,143,202,.22)}
+.tlbl{display:block;font:800 9.5px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--blue-deep)}
+.mini .try p{margin:6px 0 0;font:500 12.5px/1.45 "Plus Jakarta Sans","Jakarta Fallback",system-ui,sans-serif;letter-spacing:0;color:var(--charcoal)}
+.tip{margin-top:10px}
+.tip .tlbl{color:var(--slate)}
+.mini .tip p{margin:5px 0 0;font:600 12.5px/1.4 var(--display);color:var(--ink-soft)}
 .next-chip{position:relative;z-index:2;margin-top:-18px;background:var(--charcoal);color:#fff;border-radius:999px;padding:10px 15px;font:800 13px/1 var(--display);box-shadow:0 0 0 1px var(--ring),0 24px 40px -22px rgba(47,55,64,.35)}
 .sit{background:#fff;border-radius:14px;padding:11px 12px;box-shadow:0 0 0 1px var(--ring)}
 .sit b{display:block;font:800 15px/1.2 var(--display);letter-spacing:-.02em}
@@ -326,7 +334,7 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <nav class="nav" aria-label="Main" data-intro><span class="nav-brand"><a class="wordmark" href="/" aria-label="uimi home">u<span class="i">ı<span class="dot"></span></span>m<span class="i">ı<span class="dot"></span></span></a><span class="nav-tag">You. Me. Understood.</span></span><div class="nav-links"><span class="nav-hl" aria-hidden="true"></span><a class="link" href="/privacy/">Privacy</a><a class="link" href="/terms/">Terms</a></div><a class="btn magnetic" href="/#join">Join the waitlist<span class="ico"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a></nav>
 <main id="main">
 <div class="doc-page"><div class="wrap narrow"><article class="doc bezel"><div class="core"><h1>UIMI Terms of Service</h1>
-<p><strong>Last updated: 27 September 2026</strong></p>
+<p><strong>Last updated: 11 October 2026</strong></p>
 <p>These terms are the agreement between you and UIMI (&quot;we&quot;, &quot;us&quot;) when you use UIMI. They are deliberately short and written plainly, because most of the people using UIMI are teenagers. Using UIMI means you accept them.</p>
 <h2>1. Who can use UIMI</h2>
 <p>You must be <strong>13 or older</strong>. If you are under 18, please go through these terms and the Privacy Policy with a parent or guardian. By using UIMI while under 18, you confirm that a parent or guardian is okay with you using it under these terms.</p>
@@ -343,10 +351,10 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <p>If you send us ideas or suggestions about UIMI, we may use them without owing you anything.</p>
 <h2>4. Fair use</h2>
 <p>Do not:</p>
-<ul><li>use UIMI to harass, abuse, threaten, or impersonate anyone,</li><li>upload someone else's voice, someone else's private information, or copyrighted material as your own,</li><li>upload anything illegal,</li><li>try to break, overload, scrape, or reverse engineer the service,</li><li>try to reach another user's account, recordings, or data,</li><li>get around the free practice limit, for example with scripts or by re-using deleted practices,</li><li>automate or script the app to run up usage, or</li><li>resell or redistribute the service.</li></ul>
+<ul><li>use UIMI to harass, abuse, threaten, or impersonate anyone,</li><li>upload someone else's voice, someone else's private information, or copyrighted material as your own,</li><li>upload anything illegal,</li><li>try to break, overload, scrape, or reverse engineer the service,</li><li>try to reach another user's account, recordings, or data,</li><li>get around the free plan, for example with scripts or extra accounts,</li><li>automate or script the app to run up usage, or</li><li>resell or redistribute the service.</li></ul>
 <p>We may suspend or close an account that does these things.</p>
 <h2>5. Free practice and Premium</h2>
-<ul><li><strong>Free</strong>: three complete practice sessions, for the lifetime of the account. A session is counted when your first attempt is analysed. Retries of a session you already started are free, so you can finish what you began.</li><li>If an analysis <strong>fails</strong>, the session is given back to you. You are never charged a free session for our error.</li><li><strong>Premium</strong> removes that limit. Prices, the billing period, and any free trial are shown on the purchase screen before you buy, and again by the App Store before you confirm. A free trial is offered only to people the App Store says are eligible for one, usually first-time subscribers.</li><li>Reasonable use limits apply to everyone, including Premium, to protect the service from abuse. They are set well above what a person practising would reach.</li></ul>
+<ul><li><strong>Free</strong>: your first situation is free, with unlimited attempts, for the lifetime of the account. It becomes your free situation when your first practice on it is analysed, and you can practice it as often as you like.</li><li>If that first analysis <strong>fails</strong>, nothing is used up, and you can still pick any situation. You are never charged your free situation for our error.</li><li><strong>Premium</strong> unlocks every other situation. Prices, the billing period, and any free trial are shown on the purchase screen before you buy, and again by the App Store before you confirm. A free trial is offered only to people the App Store says are eligible for one, usually first-time subscribers.</li><li>Reasonable use limits apply to everyone, including Premium, to protect the service from abuse. They are set well above what a person practising would reach.</li></ul>
 <h2>6. Subscriptions, renewal and cancelling</h2>
 <ul><li>Subscriptions are sold and billed by <strong>Apple</strong>, through your App Store account. We never see your card.</li><li><strong>Subscriptions renew automatically</strong> at the end of each period unless you cancel at least 24 hours before it ends. Apple charges your account within 24 hours of the period ending. A free trial becomes a paid subscription when it ends unless you cancel at least 24 hours before.</li><li>If a free trial is offered, any unused part of it is lost when you buy a subscription.</li><li><strong>You cancel through the App Store</strong>, not through us: Settings, then your name, then Subscriptions. We cannot cancel it for you, and we do not put anything in the way of you cancelling.</li><li><strong>Refunds</strong> are handled by Apple under its own policy. We will support a refund request where it is fair to do so, but the decision is Apple's.</li><li>If we ever change the price, we will tell you before it takes effect and you can cancel.</li></ul>
 <h2>7. Paying for someone else</h2>
