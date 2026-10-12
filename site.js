@@ -109,6 +109,17 @@
     });
   });
 
+  // The invite page (/invite/?code=...): show the code and hand it to the app.
+  const inviteCode = document.querySelector("[data-invite-code]");
+  if (inviteCode) {
+    const code = (new URLSearchParams(location.search).get("code") || "").toUpperCase().replace(/[^A-Z0-9]/g, "");
+    if (/^[A-HJ-NP-Z2-9]{8}$/.test(code)) {
+      inviteCode.textContent = code.slice(0, 4) + " " + code.slice(4);
+      const open = document.querySelector("[data-invite-open]");
+      if (open) open.href = "uimi://invite?code=" + code;
+    }
+  }
+
   const shareUrl = "https://uimi.app/?ref=share";
   document.querySelectorAll("[data-share]").forEach((b) => b.addEventListener("click", async () => {
     const data = { title: "UIMI", text: "Say it out loud. See how you came across.", url: shareUrl };

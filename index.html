@@ -133,6 +133,7 @@ section{padding:clamp(96px,14vw,168px) 0}
 .roles button:active{scale:.96}
 .roles button[aria-pressed=true]{background:var(--charcoal);color:#fff}
 .closing .roles{justify-content:center}
+.invite-code{font:800 34px/1.1 var(--display);letter-spacing:.16em;margin:6px auto 14px;color:var(--charcoal)}
 .age13{display:flex;align-items:center;gap:10px;margin:0 0 14px;font:700 14.5px/1.3 var(--display);color:var(--ink-soft);cursor:pointer}
 .age13[hidden]{display:none}
 .age13 input{width:20px;height:20px;margin:0;accent-color:var(--charcoal)}
@@ -355,7 +356,7 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 </form>
 <div class="done" id="done-hero" tabindex="-1"><div class="bezel"><div class="core">
 <h3>You're on the list.</h3>
-<p>Parent accounts are on the way: you'll set up the account and send your teen an invite link, and they'll practice on their own phone.</p>
+<p>When UIMI launches, you'll set up the account and send your teen an invite link. They practice on their own phone.</p>
 <p class="share-q">Know someone with a big conversation coming up?</p>
 <div class="share"><button type="button" data-share>Share UIMI</button><button type="button" data-copy>Copy link</button></div>
 </div></div></div>
@@ -407,7 +408,7 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 </ol>
 <div class="parents" id="parents" data-reveal>
 <h3>For parents</h3>
-<p>Parent accounts are on the way: you'll subscribe and send your teen an invite link, and they'll practice on their own phone. You'll see how often they practice and which arenas they've used, but never the recordings or transcripts. Teens practice more honestly when it's private, and that's the point. Cancel any time in your Apple ID settings.</p>
+<p>You subscribe and send your teen an invite link. They practice on their own phone. You'll see how often they practice and which arenas they've used, but never the recordings or transcripts. Teens practice more honestly when it's private, and that's the point. Cancel any time in your Apple ID settings.</p>
 </div>
 </div>
 </section>
@@ -462,11 +463,11 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <h2 id="faq-title">Questions.</h2>
 </div>
 <div class="faq">
-<details data-reveal><summary>How does it work if I'm paying for my teen?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>We're building parent accounts so you can subscribe, then send your teen an invite link. They'll set up their own practice room on their phone, and you'll never need to log in to their account. Subscriptions go through Apple, and you can cancel any time in your Apple ID settings.</p></div></details>
-<details data-reveal><summary>Can I see how my teen is doing?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>With a parent account, you'll see how many times they've practiced and which arenas they've used. You won't see recordings, transcripts, or feedback. That stays with them, so they'll actually use it.</p></div></details>
+<details data-reveal><summary>How does it work if I'm paying for my teen?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>You subscribe, then send your teen an invite link. They set up their own practice room on their phone. You never need to log in to their account, and you can cancel any time in your Apple ID settings.</p></div></details>
+<details data-reveal><summary>Can I see how my teen is doing?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>You'll see how many times they've practiced and which arenas they've used. You won't see recordings, transcripts, or feedback. That stays with them, so they'll actually use it.</p></div></details>
 <details data-reveal><summary>What is UIMI?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>A private practice room for real conversations. Pick a situation, say your response out loud, and see how you likely came across, with one thing to improve before you try again. An AI model transcribes what you said and reads your words and delivery against the situation and the impression you were going for. It's an estimate, not a verdict.</p></div></details>
 <details data-reveal><summary>Who is UIMI for?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Teens and young adults, from high school through college, who want to feel ready for the conversations that matter: interviews, class, presentations, and the everyday ones that feel awkward. Parents subscribe; teens practice. UIMI is for ages 13 and up.</p></div></details>
-<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Yes. Audio only, with no camera and no audience. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. Parent accounts will show practice counts, never recordings or transcripts. You can delete any practice, or your whole account, right in the app.</p></div></details>
+<details data-reveal><summary>Are my recordings private?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Yes. Audio only, with no camera and no audience. Only your account can play them back. They're never shared with other people, never sold, and never used to train AI models. Parents see practice counts, never recordings or transcripts. You can delete any practice, or your whole account, right in the app.</p></div></details>
 <details data-reveal><summary>Is UIMI therapy?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>No. UIMI is a practice tool, like rehearsing with a coach. It isn't counselling or mental health care, and it isn't a crisis service. If someone is struggling or feels unsafe, in the US they can call or text 988 at any time.</p></div></details>
 <details data-reveal><summary>When is UIMI launching?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>UIMI is coming to iPhone first. Join the waitlist and we'll email you as soon as it's ready.</p></div></details>
 <details data-reveal><summary>Is UIMI free?<span class="pm" aria-hidden="true"></span></summary><div class="ans"><p>Your first situation is free, with unlimited attempts. Premium unlocks the rest, including Your Words, where you practice your own material, with prices shown clearly before anyone pays.</p></div></details>
@@ -493,7 +494,7 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 </form>
 <div class="done" id="done-footer" tabindex="-1"><div class="bezel"><div class="core">
 <h3>You're on the list.</h3>
-<p>Parent accounts are on the way: you'll set up the account and send your teen an invite link, and they'll practice on their own phone.</p>
+<p>When UIMI launches, you'll set up the account and send your teen an invite link. They practice on their own phone.</p>
 <p class="share-q">Know someone with a big conversation coming up?</p>
 <div class="share"><button type="button" data-share>Share UIMI</button><button type="button" data-copy>Copy link</button></div>
 </div></div></div>
@@ -515,6 +516,6 @@ html.paused .btn:active,html.paused .roles button:active,html.paused .tablist bu
 <script src="/vendor/lenis.min.js" defer></script>
 <script src="/vendor/anime.min.js" defer></script>
 <script src="/vendor/motion.min.js" defer></script>
-<script src="/site.js?v=472732555e" defer></script>
+<script src="/site.js?v=a0e97b1af1" defer></script>
 </body>
 </html>
