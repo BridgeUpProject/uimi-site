@@ -42,7 +42,14 @@
     const done = document.getElementById(form.id.replace("join-", "done-"));
     // "I'm a ...": one pressed at a time, Parent by default.
     const roles = $$(".roles button", form);
-    roles.forEach((b) => b.addEventListener("click", () => roles.forEach((o) => o.setAttribute("aria-pressed", String(o === b)))));
+    // Students confirm they're 13 or older: UIMI never keeps a younger child's address.
+    const age = form.querySelector(".age13");
+    const ageBox = age.querySelector("input");
+    const role = () => roles.find((b) => b.getAttribute("aria-pressed") === "true")?.dataset.role || "parent";
+    roles.forEach((b) => b.addEventListener("click", () => {
+      roles.forEach((o) => o.setAttribute("aria-pressed", String(o === b)));
+      age.hidden = role() !== "student";
+    }));
     email.addEventListener("input", () => {
       field.classList.remove("invalid");
       email.removeAttribute("aria-invalid");
@@ -60,6 +67,12 @@
         email.focus();
         return;
       }
+      if (role() === "student" && !ageBox.checked) {
+        status.className = "status err";
+        status.textContent = "UIMI is for ages 13 and up. Please confirm you're 13 or older.";
+        ageBox.focus();
+        return;
+      }
       button.disabled = true;
       label.textContent = "Joining…";
       status.className = "status";
@@ -70,7 +83,8 @@
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             email: value,
-            role: roles.find((b) => b.getAttribute("aria-pressed") === "true")?.dataset.role || "parent",
+            role: role(),
+            age13: role() === "student" ? ageBox.checked : undefined,
             company: form.querySelector("input[name=company]").value,
             source: campaign ? campaign + "-" + form.dataset.source : form.dataset.source,
           }),
